@@ -100,7 +100,8 @@ export function MarkdownEditor({
       },
     },
     onUpdate: ({ editor }) => {
-      const md = editor.storage.markdown.getMarkdown();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const md = (editor.storage as any).markdown.getMarkdown();
       onChange(md);
     },
   });
@@ -108,7 +109,8 @@ export function MarkdownEditor({
   // Sync external value changes (e.g. form reset)
   useEffect(() => {
     if (!editor) return;
-    const currentMd = editor.storage.markdown.getMarkdown();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentMd = (editor.storage as any).markdown.getMarkdown();
     if (value !== currentMd) {
       editor.commands.setContent(value || "");
     }

@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Download, Play, FileText, ArrowLeft } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import type { Recurso, Unidad, Categoria } from "@/lib/types/database";
 
