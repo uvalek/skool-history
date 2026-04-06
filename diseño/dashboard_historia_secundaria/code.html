@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#eaddff",
+                    "on-primary-fixed-variant": "#4229b3",
+                    "on-tertiary-fixed": "#490017",
+                    "surface-container-high": "#efe3ff",
+                    "surface-dim": "#e3d3ff",
+                    "error": "#ac3149",
+                    "tertiary": "#9d4053",
+                    "inverse-on-surface": "#a398b3",
+                    "on-secondary-fixed-variant": "#005da5",
+                    "outline-variant": "#bbaadb",
+                    "on-tertiary-fixed-variant": "#742035",
+                    "primary-container": "#c2b9ff",
+                    "background": "#fef7ff",
+                    "secondary-fixed": "#d3e4ff",
+                    "error-container": "#f76a80",
+                    "inverse-surface": "#110a1f",
+                    "on-background": "#392b53",
+                    "on-secondary-fixed": "#004075",
+                    "surface-variant": "#eaddff",
+                    "primary-dim": "#513ac1",
+                    "surface": "#fef7ff",
+                    "on-tertiary": "#fff7f7",
+                    "on-secondary": "#f8f8ff",
+                    "surface-container": "#f4eaff",
+                    "tertiary-fixed-dim": "#fa899d",
+                    "on-secondary-container": "#005394",
+                    "on-error": "#fff7f7",
+                    "surface-tint": "#5d48ce",
+                    "secondary-dim": "#005596",
+                    "on-tertiary-container": "#69172c",
+                    "surface-container-low": "#f9f1ff",
+                    "outline": "#8373a0",
+                    "secondary-fixed-dim": "#bbd6ff",
+                    "on-surface": "#392b53",
+                    "on-primary-fixed": "#240085",
+                    "on-error-container": "#68001f",
+                    "tertiary-container": "#ff9dad",
+                    "secondary-container": "#d3e4ff",
+                    "tertiary-fixed": "#ff9dad",
+                    "primary-fixed-dim": "#b4a9ff",
+                    "on-surface-variant": "#665883",
+                    "surface-bright": "#fef7ff",
+                    "inverse-primary": "#907eff",
+                    "on-primary": "#fcf7ff",
+                    "tertiary-dim": "#8e3448",
+                    "primary": "#5d48ce",
+                    "error-dim": "#770326",
+                    "primary-fixed": "#c2b9ff",
+                    "on-primary-container": "#391baa",
+                    "secondary": "#0061ab"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-full bg-[#fef7ff] dark:bg-slate-950 fixed top-0 z-50 shadow-sm">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#392b53] dark:text-[#eaddff]">El Erudito Luminoso</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#7C69EF] dark:text-[#a092f4] font-bold border-b-2 border-[#7C69EF] pb-1 transition-colors duration-300" href="#">Biblioteca</a>
+<a class="text-[#665883] dark:text-slate-400 hover:text-[#7C69EF] transition-colors duration-300" href="#">Recursos</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container-highest rounded-full py-2 px-6 pl-12 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 w-64 border-none" placeholder="Buscar en la historia..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+</div>
+<span class="bg-tertiary-container text-on-tertiary-container px-4 py-1 rounded-full text-xs font-bold tracking-wide">Repositorio Público</span>
+</div>
+</nav>
+<div class="flex pt-16 flex-1">
+<!-- Main Content -->
+<main class="flex-1 p-8 max-w-7xl mx-auto w-full">
+<!-- Hero Section -->
+<section class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-container via-surface to-surface-container-low p-12 mb-12 flex flex-col md:flex-row items-center justify-between">
+<div class="relative z-10 max-w-xl">
+<h1 class="text-5xl font-extrabold text-on-background leading-tight tracking-tighter mb-4">
+                        Explora la Historia de la Humanidad
+                    </h1>
+<p class="text-xl text-on-surface-variant font-medium leading-relaxed">
+                        Un santuario digital dedicado a la preservación y difusión del conocimiento histórico. Desde los albores de la civilización hasta la era contemporánea.
+                    </p>
+<div class="mt-8 flex gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">Explorar Épocas</button>
+<button class="bg-surface-container-highest text-primary px-8 py-3 rounded-full font-bold hover:bg-surface-container-high transition-colors">Archivos Digitales</button>
+</div>
+</div>
+<div class="relative mt-12 md:mt-0">
+<div class="glass-card p-6 rounded-3xl border border-white/40 shadow-2xl rotate-3 relative z-20 w-64">
+<img class="w-full h-40 object-cover rounded-xl mb-4" data-alt="Classic marble bust of a historical philosopher with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMNPIeDrCWdUG91ZRKpXFgdVE6m-4K6wqdDVqSu6MgkibYXMkgGxoJEItUDlv-Xt7vIcg5DCJviAjPub_ihSjpVaXJEU-YwsLWImw9xDGdM88ychOvYkebhgs5ahHkCtKdgc4cvCkto6elf2fy48tFEC7ewhYmbhgNFw2P2apmAW2RLRVWy4HEVoGrc5Ljs-JnxV5ITyomvy1T0lpLdYW6vUGQUVzXuGr7R0Yf8ZnQwTY2vYtXr7yRS5MKps4A4e0FQtVz-KQa5xUq"/>
+<p class="font-bold text-on-background">Historia Antigua</p>
+<p class="text-xs text-on-surface-variant">Colección Actualizada</p>
+</div>
+<div class="absolute -top-10 -right-10 w-48 h-48 bg-tertiary-container/30 blur-3xl rounded-full"></div>
+</div>
+</section>
+<!-- Grandes Épocas (Bento Grid) -->
+<section class="mb-16">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-3xl font-bold text-on-background">Periodos Históricos</h2>
+<p class="text-on-surface-variant">Navega por los grandes hitos de nuestra cronología</p>
+</div>
+<a class="text-primary font-bold hover:underline" href="#">Ver todas las épocas</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-low rounded-[2rem] p-8 flex flex-col justify-between group cursor-pointer transition-all hover:bg-surface-container-high">
+<div class="flex justify-between items-start">
+<span class="bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold">HISTORIA MODERNA</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+<div>
+<h3 class="text-3xl font-bold mb-4">La Revolución Industrial y sus Consecuencias</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Análisis profundo del cambio socioeconómico que transformó el mundo a finales del siglo XVIII.</p>
+<div class="flex -space-x-2">
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-secondary-fixed flex items-center justify-center text-xs font-bold">PDF</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-tertiary-container flex items-center justify-center text-xs font-bold">VID</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-xs font-bold">+12</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-2 bg-surface-container-low rounded-[2rem] p-8 flex items-center gap-6 group cursor-pointer hover:bg-surface-container-high">
+<div class="w-24 h-24 bg-tertiary-container/20 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">castle</span>
+</div>
+<div>
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">EDAD MEDIA</span>
+<h3 class="text-xl font-bold">Feudalismo y Cruzadas</h3>
+<p class="text-sm text-on-surface-variant">La estructura social y conflictos de la cristiandad.</p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-[2rem] p-8 group cursor-pointer hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">account_balance</span>
+<h3 class="text-lg font-bold">Roma Antigua</h3>
+<p class="text-xs text-on-surface-variant mt-2">Del ascenso de la República a la caída del Imperio.</p>
+</div>
+<div class="bg-surface-container-low rounded-[2rem] p-8 group cursor-pointer hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-on-primary-fixed-variant text-3xl mb-4">public</span>
+<h3 class="text-lg font-bold">Guerra Fría</h3>
+<p class="text-xs text-on-surface-variant mt-2">El equilibrio del terror y el nuevo orden mundial.</p>
+</div>
+</div>
+</section>
+<!-- Recursos Recientes -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<h2 class="text-3xl font-bold text-on-background">Recursos Recientes</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="group bg-surface-container-lowest rounded-3xl overflow-hidden transition-all hover:-translate-y-1">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Ancient Egyptian hieroglyphs carved into a sunlit sandstone wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUjvXSmFBED8SETsMtGJan6N9-vgbd2i53-voRvLIebVUPvXXWAQZalViD7GRFYjyGn6SZON2HYHaXoMA9uDkuGdtR0m7QZz7fmX7t4D1XPkHtGpduPSmfuoARLVlTKAVUsNPqmaQVz3l2E-UAwroZUUggCT22MJTwYTF_kODjy03nfakUZwDUxgb04S762INV-rLP3aJy4-3e_er3prKI_Fm86qM2OocjsoNKW4vgruMxRagsE126w6JgU7KHwoUKR74yhETnMxGw"/>
+<div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-on-background uppercase tracking-wider">Archivo Visual</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-0.5 rounded-full text-[10px] font-bold italic">20 min documental</span>
+<span class="text-on-surface-variant text-[10px]">Egiptología</span>
+</div>
+<h4 class="text-xl font-bold mb-3">Descifrando el Valle de los Reyes</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Un recorrido por las técnicas arqueológicas que revelaron los secretos de los faraones.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface-container-lowest rounded-3xl overflow-hidden transition-all hover:-translate-y-1">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Vintage map of the world with tea stains and compass icons" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu4YZ7gduWPq9pad_NXkt7f8qooeClONe3YHZAAT5i8sfqgWWfGkgYltaWP1oXz1CgOve74va0JWrUOfIUXVWsvqlqczmkhHbGJx8tXP9K0kFBA49bVop_n4MufuVmWCR2dtl5qV_RhSKgh6ELkL0MrqM89z0uCXoMI7pHp-dp2XLMuWg9-pOfGGfzGNn9R2IACFypYjGIyQppqRG5iBuFwSJuFSz_Jg0QFeJXMMzLLkwfPj01VFKxh4U-yUSY-y88aL6qhgbK6VFV"/>
+<div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-on-background uppercase tracking-wider">Guía de Estudio</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-0.5 rounded-full text-[10px] font-bold italic">Cartografía</span>
+<span class="text-on-surface-variant text-[10px]">Era de los Descubrimientos</span>
+</div>
+<h4 class="text-xl font-bold mb-3">Rutas de Navegación del Siglo XVI</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Mapas detallados y diarios de navegación de las expediciones transoceánicas.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface-container-lowest rounded-3xl overflow-hidden transition-all hover:-translate-y-1">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Detailed close up of an antique printing press with lead letters and ink" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb1hr4YrIHQZNe2WcGed9P7T00vizFs4oc5Z7l75rfs25fL_IYP7RmpgLnisb-unRM7MkSz8GOxl-J6eIzi5XjUBHp_ALOsVZvpyyANDEstbRxzK7Gwc6r4yYyvEuuQhOiMwI4T-rYEIuH5-DPjeOpwIhHmHlhdrlbWi7CXdI-EyfsFLkx-c21Gv9peWRSUur-ZLcemMjlSBKbLoQKGwE8zRnJKSlZQEx0613i9Ttv5ut0qmGsyYlKL5ZNm5KUqqIJKimj476egJya"/>
+<div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-on-background uppercase tracking-wider">Lectura Crítica</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-primary-container text-on-primary-container px-3 py-0.5 rounded-full text-[10px] font-bold italic">15 min lectura</span>
+<span class="text-on-surface-variant text-[10px]">Renacimiento</span>
+</div>
+<h4 class="text-xl font-bold mb-3">La Imprenta y la Difusión del Humanismo</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Cómo la tecnología de Gutenberg catalizó el cambio de pensamiento en Europa.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-auto flex flex-col items-center gap-4 px-8 py-8 bg-[#fef7ff] dark:bg-slate-950 border-t border-surface-container-highest">
+<div class="flex gap-8 mb-4">
+<a class="text-sm font-bold text-[#665883] hover:underline decoration-[#7C69EF] transition-all" href="#">Sobre nosotros</a>
+<a class="text-sm font-bold text-[#665883] hover:underline decoration-[#7C69EF] transition-all" href="#">Privacidad</a>
+<a class="text-sm font-bold text-[#665883] hover:underline decoration-[#7C69EF] transition-all" href="#">Accesibilidad</a>
+<a class="text-sm font-bold text-[#665883] hover:underline decoration-[#7C69EF] transition-all" href="#">Contacto</a>
+</div>
+<div class="text-center">
+<span class="text-sm font-bold text-[#392b53]">El Erudito Luminoso</span>
+<p class="text-xs text-[#665883] mt-2">© 2024 El Erudito Luminoso. Una iniciativa de Intelecto Atmosférico.</p>
+</div>
+</footer>
+</body></html>
