@@ -14,6 +14,7 @@ export type UnidadColor =
 export interface Unidad {
   id: string;
   created_at: string;
+  updated_at: string;
   titulo: string;
   descripcion: string;
   categoria: Categoria;
@@ -41,6 +42,7 @@ export interface UnidadUpdate {
 export interface Recurso {
   id: string;
   created_at: string;
+  updated_at: string;
   titulo: string;
   descripcion: string;
   categoria: Categoria;
