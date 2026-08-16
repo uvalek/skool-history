@@ -19,6 +19,8 @@ export interface Estadisticas {
   recursos: ConteoPorCategoria;
   videos: number;
   archivos: number;
+  /** Todas las unidades con su conteo de recursos y antiguedad. */
+  todas: UnidadConMetricas[];
   vacias: UnidadConMetricas[];
   desactualizadas: UnidadConMetricas[];
   recientes: UnidadConMetricas[];
@@ -79,6 +81,7 @@ export function calcularEstadisticas(
     recursos: porCategoria(recursos),
     videos,
     archivos,
+    todas: conMetricas,
     vacias: conMetricas.filter((u) => u.recursoCount === 0),
     desactualizadas: conMetricas
       .filter((u) => u.diasSinEditar >= DIAS_DESACTUALIZADA)

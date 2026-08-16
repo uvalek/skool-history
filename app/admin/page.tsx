@@ -183,6 +183,15 @@ export default function AdminPage() {
     resetRecursoForm();
   }
 
+  /** Desde el dashboard: abre la unidad del recurso con su formulario listo. */
+  function abrirRecursoParaEditar(recurso: Recurso) {
+    const unidad = unidades.find((u) => u.id === recurso.unidad_id);
+    if (!unidad) return;
+    setUnidadActivaId(unidad.id);
+    setSeccion(unidad.categoria);
+    startEditRecurso(recurso);
+  }
+
   // --- CRUD Unidad ---
   function resetUnidadForm() {
     setUnidadForm(UNIDAD_FORM_VACIO);
@@ -415,7 +424,13 @@ export default function AdminPage() {
         <main className="mx-auto max-w-6xl px-6 py-8">
           {/* ========= DASHBOARD ========= */}
           {seccion === "dashboard" && !unidadActiva && (
-            <DashboardView stats={stats} onAbrirUnidad={abrirUnidad} />
+            <DashboardView
+              stats={stats}
+              unidades={unidades}
+              recursos={recursos}
+              onAbrirUnidad={abrirUnidad}
+              onEditarRecurso={abrirRecursoParaEditar}
+            />
           )}
 
           {/* ========= UNIDADES DE UNA CATEGORIA ========= */}
