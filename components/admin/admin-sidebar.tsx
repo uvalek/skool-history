@@ -132,28 +132,6 @@ export function AdminSidebar({
           })}
         </nav>
 
-        {/* Mascota: decorativa y discreta. Se apoya en un halo del color de la
-            seccion activa para integrarse sin competir con la navegacion.
-            Si el archivo no existe, el bloque entero desaparece. */}
-        {mascotaOk && (
-          // Se oculta en ventanas bajas: es decorativa y no debe empujar la
-          // navegacion ni el pie fuera de la pantalla.
-          <div className="relative flex shrink-0 items-end justify-center px-3 [@media(max-height:720px)]:hidden">
-            <div
-              className="absolute bottom-3 h-24 w-24 rounded-full opacity-35 blur-2xl transition-colors duration-700"
-              style={{ backgroundColor: SECTION_COLORS[seccion].accent }}
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/imagenroma.png"
-              alt=""
-              aria-hidden
-              onError={() => setMascotaOk(false)}
-              className="relative h-36 w-auto select-none object-contain opacity-90"
-            />
-          </div>
-        )}
-
         {/* Pie */}
         <div className="space-y-1 px-3 pb-4">
           <Link
@@ -172,6 +150,37 @@ export function AdminSidebar({
             Salir
           </button>
         </div>
+
+        {/* Mascota: cierra la barra a todo lo ancho, bajo la navegacion y el
+            pie. La mascara la desvanece hacia arriba para que se funda con el
+            vidrio en vez de cortarse en seco. Decorativa: si el archivo no
+            existe, el bloque entero desaparece. */}
+        {mascotaOk && (
+          // Se oculta en ventanas bajas: no debe comerse la navegacion.
+          <div
+            className="relative w-full shrink-0 overflow-hidden [@media(max-height:720px)]:hidden"
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 28%, #000 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 28%, #000 100%)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/imagenroma.png"
+              alt=""
+              aria-hidden
+              onError={() => setMascotaOk(false)}
+              className="h-56 w-full select-none object-cover object-top opacity-85 saturate-[0.85]"
+            />
+            {/* Tinte morado de la paleta, sobre la imagen */}
+            <div
+              className="pointer-events-none absolute inset-0 mix-blend-multiply"
+              style={{ backgroundColor: "rgba(93, 72, 206, 0.28)" }}
+            />
+          </div>
+        )}
       </aside>
     </>
   );
