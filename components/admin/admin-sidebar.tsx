@@ -78,7 +78,7 @@ export function AdminSidebar({
         </div>
 
         {/* Navegacion */}
-        <nav className="flex-1 space-y-1 px-3 py-4">
+        <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-4">
           {items.map(({ id, label, icon: Icon }) => {
             const activa = seccion === id;
             const color = SECTION_COLORS[id];
@@ -136,14 +136,16 @@ export function AdminSidebar({
             seccion activa para integrarse sin competir con la navegacion.
             Si el archivo no existe, el bloque entero desaparece. */}
         {mascotaOk && (
-          <div className="relative flex shrink-0 items-end justify-center px-3">
+          // Se oculta en ventanas bajas: es decorativa y no debe empujar la
+          // navegacion ni el pie fuera de la pantalla.
+          <div className="relative flex shrink-0 items-end justify-center px-3 [@media(max-height:720px)]:hidden">
             <div
               className="absolute bottom-3 h-24 w-24 rounded-full opacity-35 blur-2xl transition-colors duration-700"
               style={{ backgroundColor: SECTION_COLORS[seccion].accent }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/emperador.png"
+              src="/imagenroma.png"
               alt=""
               aria-hidden
               onError={() => setMascotaOk(false)}
