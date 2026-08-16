@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   BookOpen,
@@ -41,6 +42,8 @@ export function AdminSidebar({
   abierta,
   onCerrar,
 }: AdminSidebarProps) {
+  const [mascotaOk, setMascotaOk] = useState(true);
+
   return (
     <>
       {/* Velo para el cajon en movil */}
@@ -128,6 +131,26 @@ export function AdminSidebar({
             );
           })}
         </nav>
+
+        {/* Mascota: decorativa y discreta. Se apoya en un halo del color de la
+            seccion activa para integrarse sin competir con la navegacion.
+            Si el archivo no existe, el bloque entero desaparece. */}
+        {mascotaOk && (
+          <div className="relative flex shrink-0 items-end justify-center px-3">
+            <div
+              className="absolute bottom-3 h-24 w-24 rounded-full opacity-35 blur-2xl transition-colors duration-700"
+              style={{ backgroundColor: SECTION_COLORS[seccion].accent }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/emperador.png"
+              alt=""
+              aria-hidden
+              onError={() => setMascotaOk(false)}
+              className="relative h-36 w-auto select-none object-contain opacity-90"
+            />
+          </div>
+        )}
 
         {/* Pie */}
         <div className="space-y-1 px-3 pb-4">
