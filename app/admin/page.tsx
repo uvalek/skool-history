@@ -25,6 +25,8 @@ import {
   AdminSidebar,
   type Seccion,
 } from "@/components/admin/admin-sidebar";
+import { RadialBackground } from "@/components/admin/radial-background";
+import { SECTION_COLORS } from "@/lib/section-colors";
 import { DashboardView } from "@/components/admin/dashboard-view";
 import { RecursoListItem } from "@/components/admin/recurso-list-item";
 import {
@@ -422,7 +424,10 @@ export default function AdminPage() {
       : etiquetaCategoria[categoriaActiva];
 
   return (
-    <div className="min-h-screen bg-ds-surface">
+    // Sin fondo propio: el degradado de RadialBackground queda visible detras.
+    <div className="min-h-screen">
+      <RadialBackground seccion={seccion} />
+
       <AdminSidebar
         seccion={seccion}
         onSeccionChange={irASeccion}
@@ -493,7 +498,11 @@ export default function AdminPage() {
                   {!showUnidadForm && (
                     <Button
                       onClick={nuevaUnidad}
-                      className="rounded-full bg-ds-primary text-ds-on-primary hover:bg-ds-primary-dim"
+                      style={{
+                        backgroundColor: SECTION_COLORS[categoriaActiva].accent,
+                        color: "#ffffff",
+                      }}
+                      className="rounded-full transition-all hover:brightness-110"
                     >
                       <Plus className="mr-2 h-4 w-4" />
                       Nueva Unidad
@@ -592,7 +601,12 @@ export default function AdminPage() {
                 {!showRecursoForm && (
                   <Button
                     onClick={() => setShowRecursoForm(true)}
-                    className="rounded-full bg-ds-primary text-ds-on-primary hover:bg-ds-primary-dim"
+                    style={{
+                      backgroundColor:
+                        SECTION_COLORS[unidadActiva.categoria].accent,
+                      color: "#ffffff",
+                    }}
+                    className="rounded-full transition-all hover:brightness-110"
                   >
                     <Plus className="mr-2 h-4 w-4" />
                     Nuevo Recurso

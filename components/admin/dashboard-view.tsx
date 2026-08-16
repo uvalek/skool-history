@@ -238,7 +238,7 @@ export function DashboardView({
 
       {/* Detalle de la tarjeta seleccionada */}
       {tarjetaAbierta && (
-        <Card className="ring-0 bg-ds-surface-container-low shadow-editorial">
+        <Card className="ring-0 admin-card shadow-editorial">
           <CardHeader className="flex flex-row items-center justify-between gap-2">
             <CardTitle className="font-headline text-base text-ds-on-surface">
               {tarjetaAbierta.titulo}
@@ -289,7 +289,7 @@ export function DashboardView({
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Necesitan atencion */}
-        <Card className="ring-0 bg-ds-surface-container-low shadow-editorial">
+        <Card className="ring-0 admin-card shadow-editorial">
           <CardHeader>
             <CardTitle className="font-headline text-base text-ds-on-surface">
               Necesitan atencion
@@ -320,7 +320,7 @@ export function DashboardView({
         </Card>
 
         {/* Actividad reciente */}
-        <Card className="ring-0 bg-ds-surface-container-low shadow-editorial">
+        <Card className="ring-0 admin-card shadow-editorial">
           <CardHeader>
             <CardTitle className="font-headline text-base text-ds-on-surface">
               Actividad reciente

@@ -10,6 +10,7 @@ import {
   School,
   X,
 } from "lucide-react";
+import { SECTION_COLORS } from "@/lib/section-colors";
 
 export type Seccion = "dashboard" | "secundaria" | "universidad";
 
@@ -52,7 +53,7 @@ export function AdminSidebar({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col bg-ds-surface-container-low transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col glass-card transition-transform duration-300 md:translate-x-0 ${
           abierta ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -77,6 +78,7 @@ export function AdminSidebar({
         <nav className="flex-1 space-y-1 px-3 py-4">
           {items.map(({ id, label, icon: Icon }) => {
             const activa = seccion === id;
+            const color = SECTION_COLORS[id];
             const conteo =
               id === "secundaria"
                 ? conteos.secundaria
@@ -88,19 +90,34 @@ export function AdminSidebar({
               <button
                 key={id}
                 onClick={() => onSeccionChange(id)}
+                // Cada seccion se identifica por su color, tanto activa como
+                // al pasar el cursor.
+                style={
+                  activa
+                    ? { backgroundColor: color.light, color: color.onLight }
+                    : undefined
+                }
                 className={`flex w-full items-center gap-3 rounded-full px-4 py-2.5 text-sm font-semibold transition-all ${
                   activa
-                    ? "bg-ds-primary-container text-ds-on-primary-container"
-                    : "text-ds-on-surface-variant hover:bg-ds-surface-container-high hover:text-ds-primary"
+                    ? "shadow-editorial"
+                    : "text-ds-on-surface-variant hover:bg-ds-surface-container-high"
                 }`}
               >
-                <Icon className="h-5 w-5 shrink-0" />
+                <Icon
+                  className="h-5 w-5 shrink-0"
+                  style={activa ? { color: color.accent } : undefined}
+                />
                 <span className="flex-1 text-left">{label}</span>
                 {conteo !== null && (
                   <span
+                    style={
+                      activa
+                        ? { backgroundColor: color.accent, color: "#ffffff" }
+                        : undefined
+                    }
                     className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold ${
                       activa
-                        ? "bg-ds-on-primary-container/15 text-ds-on-primary-container"
+                        ? ""
                         : "bg-ds-surface-container-highest text-ds-on-surface-variant"
                     }`}
                   >

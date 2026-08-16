@@ -60,7 +60,7 @@ export function StatCard({
 
   if (!onClick) {
     return (
-      <Card className="ring-0 bg-ds-surface-container-low shadow-editorial">
+      <Card className="ring-0 admin-card shadow-editorial">
         {contenido}
       </Card>
     );
@@ -78,10 +78,10 @@ export function StatCard({
           onClick();
         }
       }}
-      className={`cursor-pointer text-left transition-all hover:-translate-y-0.5 hover:bg-ds-surface-bright focus-visible:outline-none ${
+      className={`cursor-pointer text-left transition-all hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none ${
         activa
-          ? "bg-ds-surface-bright ring-2 ring-ds-primary shadow-editorial"
-          : "ring-0 bg-ds-surface-container-low shadow-editorial"
+          ? "bg-white ring-2 ring-ds-primary shadow-editorial"
+          : "ring-0 admin-card shadow-editorial"
       }`}
     >
       {contenido}

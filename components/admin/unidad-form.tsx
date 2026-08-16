@@ -82,7 +82,7 @@ export function UnidadForm({
   ) => onChange({ ...values, [key]: value });
 
   return (
-    <Card className="mb-8 ring-0 bg-ds-surface-container-low shadow-editorial">
+    <Card className="mb-8 ring-0 admin-card shadow-editorial">
       <CardHeader>
         <CardTitle className="font-headline text-ds-on-surface">
           {editando ? "Editar Unidad" : "Nueva Unidad"}

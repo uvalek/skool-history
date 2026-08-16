@@ -272,6 +272,14 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
+  /* Tarjetas del panel de administracion. Neutra a proposito: se apoya sobre
+     el degradado de la seccion y toma su matiz, en lugar de imponer el
+     lavanda de surface-container-low sobre un fondo verde o cafe. */
+  .admin-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
   .shadow-editorial {
     box-shadow: var(--shadow-editorial);
   }

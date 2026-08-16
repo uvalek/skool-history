@@ -44,7 +44,7 @@ export function UnidadGalleryCard({
   return (
     <div ref={setNodeRef} style={style} className="group">
       <Card
-        className="h-full overflow-hidden p-0 ring-0 bg-ds-surface-container-low shadow-editorial cursor-pointer gap-0 transition-all hover:-translate-y-0.5 hover:bg-ds-surface-bright"
+        className="h-full overflow-hidden p-0 ring-0 admin-card shadow-editorial cursor-pointer gap-0 transition-all hover:-translate-y-0.5 hover:bg-white"
         onClick={onOpen}
       >
         {/* Portada de color */}

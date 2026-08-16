@@ -38,7 +38,7 @@ export function RecursoListItem({
 
   return (
     <div ref={setNodeRef} style={style}>
-      <Card className="ring-0 bg-ds-surface-container-low shadow-editorial">
+      <Card className="ring-0 admin-card shadow-editorial">
         <CardContent className="flex items-center justify-between gap-3 p-4">
           <div className="flex min-w-0 items-center gap-3">
             <button
