@@ -189,6 +189,29 @@ export default function AdminPage() {
     resetRecursoForm();
   }
 
+  /** Desde el formulario de edicion: entra al contenido de esa unidad. */
+  function irARecursosDesdeFormulario() {
+    const unidad = unidades.find((u) => u.id === editingUnidadId);
+    if (!unidad) return;
+
+    const sinGuardar =
+      unidad.titulo !== unidadForm.titulo ||
+      unidad.descripcion !== unidadForm.descripcion ||
+      unidad.categoria !== unidadForm.categoria ||
+      (unidad.color || "purple") !== unidadForm.color;
+
+    if (
+      sinGuardar &&
+      !confirm(
+        "Tienes cambios sin guardar en esta unidad. Si continuas se descartaran."
+      )
+    )
+      return;
+
+    resetUnidadForm();
+    abrirUnidad(unidad);
+  }
+
   /** Desde el dashboard: abre la unidad del recurso con su formulario listo. */
   function abrirRecursoParaEditar(recurso: Recurso) {
     const unidad = unidades.find((u) => u.id === recurso.unidad_id);
@@ -486,6 +509,14 @@ export default function AdminPage() {
                   onSubmit={handleUnidadSubmit}
                   onCancel={resetUnidadForm}
                   editando={editingUnidadId !== null}
+                  // Solo al editar: una unidad que aun no existe no tiene
+                  // recursos a los que entrar.
+                  onEditarRecursos={
+                    editingUnidadId ? irARecursosDesdeFormulario : undefined
+                  }
+                  recursoCount={
+                    editingUnidadId ? conteos[editingUnidadId] || 0 : 0
+                  }
                 />
               )}
 

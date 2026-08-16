@@ -1,6 +1,6 @@
 "use client";
 
-import { FolderOpen } from "lucide-react";
+import { ArrowRight, FolderOpen, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -62,6 +62,9 @@ interface UnidadFormProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   editando: boolean;
+  /** Solo al editar: lleva al contenido de la unidad (videos y archivos). */
+  onEditarRecursos?: () => void;
+  recursoCount?: number;
 }
 
 export function UnidadForm({
@@ -70,6 +73,8 @@ export function UnidadForm({
   onSubmit,
   onCancel,
   editando,
+  onEditarRecursos,
+  recursoCount = 0,
 }: UnidadFormProps) {
   const set = <K extends keyof UnidadFormValues>(
     key: K,
@@ -129,6 +134,42 @@ export function UnidadForm({
             value={values.color}
             onChange={(c) => set("color", c)}
           />
+
+          {/* Los campos de arriba son la "portada" de la unidad; el contenido
+              que ven los alumnos vive un nivel adentro, y sin esto no era
+              evidente como llegar. */}
+          {onEditarRecursos && (
+            <div className="rounded-xl bg-ds-surface-container-highest p-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ds-surface-container-lowest">
+                    <Layers className="h-5 w-5 text-ds-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-ds-on-surface">
+                      Contenido de la unidad
+                    </p>
+                    <p className="text-xs text-ds-on-surface-variant">
+                      {recursoCount === 0
+                        ? "Aun no tiene recursos"
+                        : `${recursoCount} recurso${
+                            recursoCount === 1 ? "" : "s"
+                          } con videos y material`}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  onClick={onEditarRecursos}
+                  className="rounded-full bg-ds-secondary text-ds-on-secondary hover:bg-ds-secondary-dim"
+                >
+                  Editar los recursos
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+
           <div className="flex gap-3">
             <Button
               type="submit"
