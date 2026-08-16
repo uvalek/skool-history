@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Download, Play, FileText, ArrowLeft } from "lucide-react";
+import { Download, FileText, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { VideoCarousel } from "@/components/video-carousel";
 import type { Recurso, Unidad, Categoria } from "@/lib/types/database";
 
 interface UnidadDetailProps {
@@ -52,21 +53,14 @@ const themeColors: Record<
   },
 };
 
-function extractYouTubeId(url: string): string | null {
-  const match = url.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
-  );
-  return match ? match[1] : null;
-}
-
 export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selectedRecurso = recursos[selectedIndex] || null;
   const theme = themeColors[unidad.categoria];
 
-  const videoId = selectedRecurso?.urls_video[0]
-    ? extractYouTubeId(selectedRecurso.urls_video[0])
-    : null;
+  // Las URLs pueden traer huecos vacios de los formularios del panel.
+  const videos = selectedRecurso?.urls_video.filter(Boolean) ?? [];
+  const archivos = selectedRecurso?.urls_recurso.filter(Boolean) ?? [];
 
   return (
     <div className="flex min-h-[calc(100vh-64px)] flex-col">
@@ -144,33 +138,39 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                 {selectedRecurso.titulo}
               </h1>
 
-              {/* Video */}
-              {videoId && (
-                <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-editorial">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${videoId}`}
-                    title={selectedRecurso.titulo}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full"
-                  />
-                </div>
-              )}
+              {/* Videos: uno embebido, con carrusel si hay varios */}
+              <VideoCarousel
+                key={selectedRecurso.id}
+                videos={videos}
+                titulo={selectedRecurso.titulo}
+                theme={theme}
+              />
 
-              {/* Si no hay video ID pero hay URL */}
-              {!videoId && selectedRecurso.urls_video[0] && (
-                <div className="flex aspect-video items-center justify-center rounded-xl bg-ds-surface-container-highest">
-                  <div className="text-center">
-                    <Play className="mx-auto mb-2 h-12 w-12 text-ds-on-surface-variant" />
-                    <a
-                      href={selectedRecurso.urls_video[0]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                      style={{ color: theme.linkColor }}
-                    >
-                      Ver video en nueva pestaña
-                    </a>
+              {/* Material descargable, justo debajo de los videos */}
+              {archivos.length > 0 && (
+                <div>
+                  <h3 className="mb-2 text-sm font-semibold text-ds-on-surface-variant">
+                    Material descargable
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {archivos.map((url, i) => (
+                      <a
+                        key={i}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
+                        style={{
+                          backgroundColor: theme.downloadBg,
+                          color: theme.downloadText,
+                        }}
+                      >
+                        <Download className="mr-1 h-4 w-4" />
+                        {archivos.length > 1
+                          ? `Recurso ${i + 1}`
+                          : "Descargar Recurso"}
+                      </a>
+                    ))}
                   </div>
                 </div>
               )}
@@ -181,66 +181,6 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                   <ReactMarkdown>{selectedRecurso.descripcion}</ReactMarkdown>
                 </div>
               )}
-
-              {/* Videos adicionales */}
-              {selectedRecurso.urls_video.length > 1 && (
-                <div>
-                  <h3 className="mb-2 text-sm font-semibold text-ds-on-surface-variant">
-                    Videos adicionales
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedRecurso.urls_video.slice(1).map((url, i) => (
-                      <a
-                        key={i}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
-                        style={{
-                          border: `1px solid ${theme.accent}30`,
-                          color: theme.linkColor,
-                        }}
-                      >
-                        <Play className="mr-1 h-4 w-4" />
-                        Video {i + 2}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Recursos descargables */}
-              {selectedRecurso.urls_recurso.length > 0 &&
-                selectedRecurso.urls_recurso.some(Boolean) && (
-                  <div>
-                    <h3 className="mb-2 text-sm font-semibold text-ds-on-surface-variant">
-                      Material descargable
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedRecurso.urls_recurso
-                        .filter(Boolean)
-                        .map((url, i) => (
-                          <a
-                            key={i}
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
-                            style={{
-                              backgroundColor: theme.downloadBg,
-                              color: theme.downloadText,
-                            }}
-                          >
-                            <Download className="mr-1 h-4 w-4" />
-                            {selectedRecurso.urls_recurso.filter(Boolean)
-                              .length > 1
-                              ? `Recurso ${i + 1}`
-                              : "Descargar Recurso"}
-                          </a>
-                        ))}
-                    </div>
-                  </div>
-                )}
             </div>
           ) : (
             <div className="flex h-full items-center justify-center">
