@@ -61,6 +61,7 @@ const UNIDAD_FORM_VACIO: UnidadFormValues = {
   descripcion: "",
   categoria: "secundaria",
   color: "purple",
+  imagenUrl: null,
 };
 
 const RECURSO_FORM_VACIO: RecursoFormValues = {
@@ -200,7 +201,8 @@ export default function AdminPage() {
       unidad.titulo !== unidadForm.titulo ||
       unidad.descripcion !== unidadForm.descripcion ||
       unidad.categoria !== unidadForm.categoria ||
-      (unidad.color || "purple") !== unidadForm.color;
+      (unidad.color || "purple") !== unidadForm.color ||
+      unidad.imagen_url !== unidadForm.imagenUrl;
 
     if (
       sinGuardar &&
@@ -242,6 +244,7 @@ export default function AdminPage() {
       descripcion: unidad.descripcion,
       categoria: unidad.categoria,
       color: unidad.color || "purple",
+      imagenUrl: unidad.imagen_url,
     });
     setEditingUnidadId(unidad.id);
     setShowUnidadForm(true);
@@ -265,6 +268,7 @@ export default function AdminPage() {
           descripcion: unidadForm.descripcion,
           categoria: unidadForm.categoria,
           color: unidadForm.color,
+          imagen_url: unidadForm.imagenUrl,
           ...(cambioCategoria
             ? {
                 orden: unidades.filter(
@@ -275,8 +279,13 @@ export default function AdminPage() {
         })
         .eq("id", editingUnidadId);
     } else {
+      // Mapeo explicito: el formulario usa camelCase y las columnas snake_case.
       const payload: UnidadInsert = {
-        ...unidadForm,
+        titulo: unidadForm.titulo,
+        descripcion: unidadForm.descripcion,
+        categoria: unidadForm.categoria,
+        color: unidadForm.color,
+        imagen_url: unidadForm.imagenUrl,
         orden: unidades.filter((u) => u.categoria === unidadForm.categoria)
           .length,
       };

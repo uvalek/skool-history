@@ -2,9 +2,16 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { FolderOpen, GripVertical, Pencil, Trash2 } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { getFolderColor } from "@/lib/folder-colors";
+import { FileText, GripVertical, Pencil, Trash2 } from "lucide-react";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { UnidadBanner } from "@/components/unidad-banner";
 import { tiempoRelativo } from "@/lib/admin-stats";
 import type { Unidad } from "@/lib/types/database";
 
@@ -32,8 +39,6 @@ export function UnidadGalleryCard({
     isDragging,
   } = useSortable({ id: unidad.id });
 
-  const color = getFolderColor(unidad.color);
-
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -42,26 +47,26 @@ export function UnidadGalleryCard({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="group">
+    <div ref={setNodeRef} style={style} className="group h-full">
       <Card
-        className="h-full overflow-hidden p-0 ring-0 admin-card shadow-editorial cursor-pointer gap-0 transition-all hover:-translate-y-0.5 hover:bg-white"
+        className="h-full cursor-pointer gap-0 overflow-hidden p-0 ring-0 admin-card shadow-editorial transition-all hover:-translate-y-0.5 hover:bg-white"
         onClick={onOpen}
       >
-        {/* Portada de color */}
-        <div
-          className="relative flex h-28 items-center justify-center"
-          style={{ backgroundColor: color.bgHex }}
-        >
-          <FolderOpen className="h-10 w-10" style={{ color: color.iconHex }} />
+        <div className="relative">
+          <UnidadBanner
+            imagenUrl={unidad.imagen_url}
+            color={unidad.color}
+            className="h-32"
+          />
 
-          {/* Acciones: visibles al pasar el cursor o al enfocar con teclado */}
+          {/* Controles: al pasar el cursor o al enfocar con teclado */}
           <div className="absolute right-2 top-2 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-ds-surface-container-lowest/90 text-ds-primary backdrop-blur-sm transition-colors hover:bg-ds-surface-container-lowest"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ds-primary backdrop-blur-sm transition-colors hover:bg-white"
               aria-label="Editar unidad"
             >
               <Pencil className="h-3.5 w-3.5" />
@@ -71,7 +76,7 @@ export function UnidadGalleryCard({
                 e.stopPropagation();
                 onDelete();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-ds-surface-container-lowest/90 text-ds-error backdrop-blur-sm transition-colors hover:bg-ds-surface-container-lowest"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ds-error backdrop-blur-sm transition-colors hover:bg-white"
               aria-label="Eliminar unidad"
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -82,41 +87,35 @@ export function UnidadGalleryCard({
             {...attributes}
             {...listeners}
             onClick={(e) => e.stopPropagation()}
-            className="absolute left-2 top-2 flex h-7 w-7 cursor-grab touch-none items-center justify-center rounded-full bg-ds-surface-container-lowest/90 text-ds-on-surface-variant opacity-0 backdrop-blur-sm transition-opacity hover:text-ds-primary active:cursor-grabbing group-hover:opacity-100 group-focus-within:opacity-100"
+            className="absolute left-2 top-2 flex h-7 w-7 cursor-grab touch-none items-center justify-center rounded-full bg-white/90 text-ds-on-surface-variant opacity-0 backdrop-blur-sm transition-opacity hover:text-ds-primary active:cursor-grabbing group-hover:opacity-100 group-focus-within:opacity-100"
             aria-label="Reordenar unidad"
           >
             <GripVertical className="h-3.5 w-3.5" />
           </button>
         </div>
 
-        {/* Cuerpo */}
-        <div className="flex flex-1 flex-col p-5">
-          <h3 className="font-headline font-semibold leading-snug text-ds-on-surface">
+        <CardHeader className="pt-4">
+          <CardTitle className="font-headline text-base font-semibold leading-snug text-ds-on-surface">
             {unidad.titulo}
-          </h3>
+          </CardTitle>
           {unidad.descripcion && (
-            <p className="mt-1.5 line-clamp-2 text-sm text-ds-on-surface-variant">
+            <CardDescription className="line-clamp-2 text-sm text-ds-on-surface-variant">
               {unidad.descripcion}
-            </p>
+            </CardDescription>
           )}
+        </CardHeader>
 
-          <div className="mt-4 flex items-center justify-between gap-2 pt-1">
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
-                recursoCount === 0
-                  ? "bg-ds-tertiary-container text-ds-on-tertiary-container"
-                  : "bg-ds-secondary-container text-ds-on-secondary-container"
-              }`}
-            >
-              {recursoCount === 0
-                ? "Sin recursos"
-                : `${recursoCount} recurso${recursoCount === 1 ? "" : "s"}`}
-            </span>
-            <span className="truncate text-xs text-ds-on-surface-variant">
-              {tiempoRelativo(unidad.updated_at)}
-            </span>
-          </div>
-        </div>
+        <CardFooter className="mt-auto items-center justify-between gap-2 border-0 bg-transparent px-4 pb-4 pt-3">
+          <Badge variant={recursoCount === 0 ? "alerta" : "accent"}>
+            <FileText className="h-3.5 w-3.5" />
+            {recursoCount === 0
+              ? "Sin recursos"
+              : `${recursoCount} recurso${recursoCount === 1 ? "" : "s"}`}
+          </Badge>
+          <span className="truncate text-xs text-ds-on-surface-variant">
+            {tiempoRelativo(unidad.updated_at)}
+          </span>
+        </CardFooter>
       </Card>
     </div>
   );

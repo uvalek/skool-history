@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { BannerPicker } from "@/components/admin/banner-picker";
 import { FOLDER_COLORS } from "@/lib/folder-colors";
 import type { Categoria, UnidadColor } from "@/lib/types/database";
 
@@ -54,6 +55,7 @@ export interface UnidadFormValues {
   descripcion: string;
   categoria: Categoria;
   color: UnidadColor;
+  imagenUrl: string | null;
 }
 
 interface UnidadFormProps {
@@ -133,6 +135,12 @@ export function UnidadForm({
           <ColorPicker
             value={values.color}
             onChange={(c) => set("color", c)}
+          />
+
+          <BannerPicker
+            value={values.imagenUrl}
+            onChange={(url) => set("imagenUrl", url)}
+            color={values.color}
           />
 
           {/* Los campos de arriba son la "portada" de la unidad; el contenido

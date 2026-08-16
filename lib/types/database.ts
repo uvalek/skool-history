@@ -20,6 +20,8 @@ export interface Unidad {
   categoria: Categoria;
   orden: number;
   color: UnidadColor;
+  /** Banner de la tarjeta: URL externa o archivo subido al bucket "banners". */
+  imagen_url: string | null;
 }
 
 export interface UnidadInsert {
@@ -28,6 +30,7 @@ export interface UnidadInsert {
   categoria: Categoria;
   orden?: number;
   color?: UnidadColor;
+  imagen_url?: string | null;
 }
 
 export interface UnidadUpdate {
@@ -36,6 +39,7 @@ export interface UnidadUpdate {
   categoria?: Categoria;
   orden?: number;
   color?: UnidadColor;
+  imagen_url?: string | null;
 }
 
 // --- Recursos ---
