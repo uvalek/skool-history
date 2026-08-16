@@ -148,8 +148,14 @@ export default function AdminPage() {
   const categoriaActiva: Categoria =
     seccion === "universidad" ? "universidad" : "secundaria";
 
+  // El orden visible sale del campo 'orden', no de la posicion en el arreglo:
+  // al arrastrar solo se actualiza ese campo, asi que sin ordenar aqui la
+  // tarjeta volveria a su sitio original.
   const unidadesFiltradas = useMemo(
-    () => unidades.filter((u) => u.categoria === categoriaActiva),
+    () =>
+      unidades
+        .filter((u) => u.categoria === categoriaActiva)
+        .sort((a, b) => a.orden - b.orden),
     [unidades, categoriaActiva]
   );
 
@@ -220,7 +226,13 @@ export default function AdminPage() {
     e.preventDefault();
 
     if (editingUnidadId) {
-      // Sin 'orden': reescribirlo aqui borraria el orden fijado a mano.
+      const original = unidades.find((u) => u.id === editingUnidadId);
+      // 'orden' se conserva salvo que la unidad cambie de categoria: en ese
+      // caso su posicion antigua no significa nada en el destino y chocaria
+      // con la de otra unidad, asi que va al final.
+      const cambioCategoria =
+        original && original.categoria !== unidadForm.categoria;
+
       await supabase
         .from("unidades")
         .update({
@@ -228,6 +240,13 @@ export default function AdminPage() {
           descripcion: unidadForm.descripcion,
           categoria: unidadForm.categoria,
           color: unidadForm.color,
+          ...(cambioCategoria
+            ? {
+                orden: unidades.filter(
+                  (u) => u.categoria === unidadForm.categoria
+                ).length,
+              }
+            : {}),
         })
         .eq("id", editingUnidadId);
     } else {
