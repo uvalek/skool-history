@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clapperboard, Play } from "lucide-react";
 
 interface VideoCarouselProps {
   videos: string[];
@@ -9,6 +9,8 @@ interface VideoCarouselProps {
   theme: {
     accent: string;
     accentText: string;
+    accentLight: string;
+    accentLightText: string;
     linkColor: string;
   };
 }
@@ -51,6 +53,27 @@ export function VideoCarousel({ videos, titulo, theme }: VideoCarouselProps) {
       aria-label={`Videos de ${titulo}`}
       tabIndex={total > 1 ? 0 : undefined}
     >
+      {/* Aviso sobre el reproductor: si va debajo, muchos alumnos ni se
+          enteran de que hay mas de un video. */}
+      {total > 1 && (
+        <div
+          className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl px-4 py-2.5"
+          style={{
+            backgroundColor: theme.accentLight,
+            color: theme.accentLightText,
+          }}
+        >
+          <span className="flex items-center gap-2 font-headline text-base font-bold">
+            <Clapperboard className="h-5 w-5 shrink-0" />
+            Video {index + 1} de {total}
+          </span>
+          <span className="text-sm opacity-80">
+            Este recurso tiene {total} videos — usa las flechas para verlos
+            todos.
+          </span>
+        </div>
+      )}
+
       <div className="group relative aspect-video w-full overflow-hidden rounded-xl shadow-editorial">
         {videoId ? (
           // La clave fuerza recargar el iframe al cambiar de video, para que
@@ -103,26 +126,21 @@ export function VideoCarousel({ videos, titulo, theme }: VideoCarouselProps) {
       </div>
 
       {total > 1 && (
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-xs font-medium text-ds-on-surface-variant">
-            Video {index + 1} de {total}
-          </span>
-          <div className="flex items-center gap-1.5">
-            {videos.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Ir al video ${i + 1}`}
-                aria-current={i === index}
-                className="h-2 rounded-full transition-all"
-                style={
-                  i === index
-                    ? { width: "1.25rem", backgroundColor: theme.accent }
-                    : { width: "0.5rem", backgroundColor: "#c8c5d0" }
-                }
-              />
-            ))}
-          </div>
+        <div className="flex items-center justify-center gap-1.5">
+          {videos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Ir al video ${i + 1}`}
+              aria-current={i === index}
+              className="h-2 rounded-full transition-all"
+              style={
+                i === index
+                  ? { width: "1.5rem", backgroundColor: theme.accent }
+                  : { width: "0.5rem", backgroundColor: "#c8c5d0" }
+              }
+            />
+          ))}
         </div>
       )}
     </div>
