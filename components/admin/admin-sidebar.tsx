@@ -152,18 +152,17 @@ export function AdminSidebar({
         </div>
 
         {/* Mascota: cierra la barra a todo lo ancho, bajo la navegacion y el
-            pie. La mascara la desvanece hacia arriba para que se funda con el
-            vidrio en vez de cortarse en seco. Decorativa: si el archivo no
-            existe, el bloque entero desaparece. */}
+            pie. Decorativa: si el archivo no existe, el bloque desaparece. */}
         {mascotaOk && (
           // Se oculta en ventanas bajas: no debe comerse la navegacion.
           <div
             className="relative w-full shrink-0 overflow-hidden [@media(max-height:720px)]:hidden"
             style={{
+              // Se desvanece hacia abajo, hasta desaparecer en el borde.
               maskImage:
-                "linear-gradient(to bottom, transparent 0%, #000 28%, #000 100%)",
+                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, #000 28%, #000 100%)",
+                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -172,12 +171,14 @@ export function AdminSidebar({
               alt=""
               aria-hidden
               onError={() => setMascotaOk(false)}
-              className="h-56 w-full select-none object-cover object-top opacity-85 saturate-[0.85]"
-            />
-            {/* Tinte morado de la paleta, sobre la imagen */}
-            <div
-              className="pointer-events-none absolute inset-0 mix-blend-multiply"
-              style={{ backgroundColor: "rgba(93, 72, 206, 0.28)" }}
+              className="h-56 w-full select-none object-cover object-top"
+              style={{
+                // Tine la ilustracion en si, no la cubre: la lleva a escala de
+                // grises y la vuelve a colorear en el morado de la paleta,
+                // conservando la transparencia del PNG.
+                filter:
+                  "grayscale(1) sepia(1) hue-rotate(215deg) saturate(2.8) brightness(0.95)",
+              }}
             />
           </div>
         )}
