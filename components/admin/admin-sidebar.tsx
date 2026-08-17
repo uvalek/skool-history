@@ -56,12 +56,44 @@ export function AdminSidebar({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col glass-card transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col overflow-hidden glass-card transition-transform duration-300 md:translate-x-0 ${
           abierta ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        {/* Mascota: fondo decorativo al pie de la barra. Va absoluta y detras
+            de todo, para que la navegacion y el pie conserven su sitio en vez
+            de que la imagen los empuje. Si el archivo no existe, desaparece. */}
+        {mascotaOk && (
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 overflow-hidden"
+            style={{
+              // Se desvanece hacia abajo, hasta desaparecer en el borde.
+              maskImage:
+                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/imagenroma.png"
+              alt=""
+              aria-hidden
+              onError={() => setMascotaOk(false)}
+              className="h-80 w-full select-none object-cover object-top opacity-50"
+              style={{
+                // Tine la ilustracion en si, no la cubre: la lleva a escala de
+                // grises y la vuelve a colorear en el morado de la paleta,
+                // conservando la transparencia del PNG.
+                filter:
+                  "grayscale(1) sepia(1) hue-rotate(215deg) saturate(2.8) brightness(0.95)",
+              }}
+            />
+          </div>
+        )}
+
         {/* Marca */}
-        <div className="flex h-16 shrink-0 items-center justify-between px-6">
+        <div className="relative z-10 flex h-16 shrink-0 items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-ds-primary" />
             <span className="font-headline text-lg font-bold tracking-tight text-ds-on-surface">
@@ -78,7 +110,7 @@ export function AdminSidebar({
         </div>
 
         {/* Navegacion */}
-        <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-4">
+        <nav className="relative z-10 min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-4">
           {items.map(({ id, label, icon: Icon }) => {
             const activa = seccion === id;
             const color = SECTION_COLORS[id];
@@ -132,8 +164,8 @@ export function AdminSidebar({
           })}
         </nav>
 
-        {/* Pie */}
-        <div className="space-y-1 px-3 pb-4">
+        {/* Pie: se queda anclado abajo, por encima de la mascota */}
+        <div className="relative z-10 space-y-1 px-3 pb-4">
           <Link
             href="/"
             target="_blank"
@@ -151,37 +183,6 @@ export function AdminSidebar({
           </button>
         </div>
 
-        {/* Mascota: cierra la barra a todo lo ancho, bajo la navegacion y el
-            pie. Decorativa: si el archivo no existe, el bloque desaparece. */}
-        {mascotaOk && (
-          // Se oculta en ventanas bajas: no debe comerse la navegacion.
-          <div
-            className="relative w-full shrink-0 overflow-hidden [@media(max-height:720px)]:hidden"
-            style={{
-              // Se desvanece hacia abajo, hasta desaparecer en el borde.
-              maskImage:
-                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/imagenroma.png"
-              alt=""
-              aria-hidden
-              onError={() => setMascotaOk(false)}
-              className="h-56 w-full select-none object-cover object-top"
-              style={{
-                // Tine la ilustracion en si, no la cubre: la lleva a escala de
-                // grises y la vuelve a colorear en el morado de la paleta,
-                // conservando la transparencia del PNG.
-                filter:
-                  "grayscale(1) sepia(1) hue-rotate(215deg) saturate(2.8) brightness(0.95)",
-              }}
-            />
-          </div>
-        )}
       </aside>
     </>
   );
