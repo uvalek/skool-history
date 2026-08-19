@@ -61,7 +61,7 @@ export const CATEGORIAS: Record<Categoria, CategoriaConfig> = {
   uvhm: {
     id: "uvhm",
     label: "UVHM",
-    descripcion: "Recursos de historia para la Universidad del Valle de Hidalgo y México",
+    descripcion: "Recursos de historia para la Universidad Virtual Hispánica de México",
     heroTitulo: "Historia — UVHM",
     heroSubtitulo:
       "Accede a los recursos académicos de historia para el nivel universitario.",
