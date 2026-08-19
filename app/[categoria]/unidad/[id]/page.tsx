@@ -1,22 +1,25 @@
+import { notFound } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { UnidadDetail } from "@/components/unidad-detail";
 import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
+import { esCategoria } from "@/lib/categorias";
 import type { Unidad, Recurso } from "@/lib/types/database";
 
-export default async function UnidadSecundariaPage({
+export default async function UnidadPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ categoria: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { categoria, id } = await params;
+  if (!esCategoria(categoria)) notFound();
+
   const supabase = await createClient();
 
   const { data: unidad } = await supabase
     .from("unidades")
     .select("*")
     .eq("id", id)
-    .eq("categoria", "secundaria")
+    .eq("categoria", categoria)
     .single<Unidad>();
 
   if (!unidad) notFound();

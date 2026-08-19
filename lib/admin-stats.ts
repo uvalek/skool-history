@@ -1,3 +1,4 @@
+import { CATEGORIAS } from "@/lib/categorias";
 import type { Categoria, Recurso, Unidad } from "@/lib/types/database";
 
 /** Dias sin cambios a partir de los cuales una unidad se considera desactualizada. */
@@ -5,8 +6,8 @@ export const DIAS_DESACTUALIZADA = 30;
 
 export interface ConteoPorCategoria {
   total: number;
-  secundaria: number;
-  universidad: number;
+  /** Conteo por cada categoria, indexado por su id. */
+  porId: Record<Categoria, number>;
 }
 
 export interface UnidadConMetricas extends Unidad {
@@ -47,11 +48,14 @@ function diasDesde(fecha: string): number {
 function porCategoria<T extends { categoria: Categoria }>(
   items: T[]
 ): ConteoPorCategoria {
-  return {
-    total: items.length,
-    secundaria: items.filter((i) => i.categoria === "secundaria").length,
-    universidad: items.filter((i) => i.categoria === "universidad").length,
-  };
+  const porId = Object.fromEntries(
+    Object.keys(CATEGORIAS).map((id) => [
+      id,
+      items.filter((i) => i.categoria === id).length,
+    ])
+  ) as Record<Categoria, number>;
+
+  return { total: items.length, porId };
 }
 
 export function calcularEstadisticas(
@@ -119,7 +123,7 @@ export function tiempoRelativo(fecha: string): string {
   return rtf.format(-Math.floor(dias / 365), "year");
 }
 
-export const etiquetaCategoria: Record<Categoria, string> = {
-  secundaria: "Secundaria",
-  universidad: "Universidad",
-};
+/** Etiqueta visible de cada categoria. */
+export const etiquetaCategoria = Object.fromEntries(
+  Object.values(CATEGORIAS).map((c) => [c.id, c.label])
+) as Record<Categoria, string>;

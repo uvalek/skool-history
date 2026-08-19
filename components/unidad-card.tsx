@@ -9,20 +9,16 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UnidadBanner } from "@/components/unidad-banner";
-import type { Categoria, Unidad } from "@/lib/types/database";
+import { CATEGORIAS } from "@/lib/categorias";
+import type { Unidad } from "@/lib/types/database";
 
 interface UnidadCardProps {
   unidad: Unidad;
   recursoCount: number;
 }
 
-const acento: Record<Categoria, string> = {
-  secundaria: "#059669",
-  universidad: "#b45309",
-};
-
 export function UnidadCard({ unidad, recursoCount }: UnidadCardProps) {
-  const color = acento[unidad.categoria];
+  const color = CATEGORIAS[unidad.categoria].accent;
 
   return (
     <Link

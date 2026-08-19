@@ -27,6 +27,7 @@ import {
 } from "@/components/admin/admin-sidebar";
 import { RadialBackground } from "@/components/admin/radial-background";
 import { SECTION_COLORS } from "@/lib/section-colors";
+import { CATEGORIAS_ORDEN } from "@/lib/categorias";
 import { DashboardView } from "@/components/admin/dashboard-view";
 import { RecursoListItem } from "@/components/admin/recurso-list-item";
 import {
@@ -148,8 +149,10 @@ export default function AdminPage() {
     [unidades, unidadActivaId]
   );
 
+  // En el dashboard no hay categoria activa; se usa la primera como base para
+  // los formularios que igual no se muestran ahi.
   const categoriaActiva: Categoria =
-    seccion === "universidad" ? "universidad" : "secundaria";
+    seccion === "dashboard" ? CATEGORIAS_ORDEN[0] : seccion;
 
   // El orden visible sale del campo 'orden', no de la posicion en el arreglo:
   // al arrastrar solo se actualiza ese campo, asi que sin ordenar aqui la
@@ -440,10 +443,7 @@ export default function AdminPage() {
       <AdminSidebar
         seccion={seccion}
         onSeccionChange={irASeccion}
-        conteos={{
-          secundaria: stats.unidades.secundaria,
-          universidad: stats.unidades.universidad,
-        }}
+        conteos={stats.unidades.porId}
         onLogout={handleLogout}
         abierta={sidebarAbierta}
         onCerrar={() => setSidebarAbierta(false)}

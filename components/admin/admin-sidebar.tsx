@@ -12,17 +12,26 @@ import {
   X,
 } from "lucide-react";
 import { SECTION_COLORS } from "@/lib/section-colors";
+import { CATEGORIAS, CATEGORIAS_ORDEN } from "@/lib/categorias";
+import type { Categoria } from "@/lib/types/database";
 
-export type Seccion = "dashboard" | "secundaria" | "universidad";
+export type Seccion = "dashboard" | Categoria;
 
 interface AdminSidebarProps {
   seccion: Seccion;
   onSeccionChange: (s: Seccion) => void;
-  conteos: { secundaria: number; universidad: number };
+  /** Unidades por categoria, para el contador de cada entrada. */
+  conteos: Record<Categoria, number>;
   onLogout: () => void;
   abierta: boolean;
   onCerrar: () => void;
 }
+
+const iconosCategoria: Record<Categoria, typeof LayoutDashboard> = {
+  secundaria: School,
+  uatx: GraduationCap,
+  uvhm: GraduationCap,
+};
 
 const items: {
   id: Seccion;
@@ -30,8 +39,11 @@ const items: {
   icon: typeof LayoutDashboard;
 }[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "secundaria", label: "Secundaria", icon: School },
-  { id: "universidad", label: "Universidad", icon: GraduationCap },
+  ...CATEGORIAS_ORDEN.map((id) => ({
+    id,
+    label: CATEGORIAS[id].label,
+    icon: iconosCategoria[id],
+  })),
 ];
 
 export function AdminSidebar({
@@ -114,12 +126,7 @@ export function AdminSidebar({
           {items.map(({ id, label, icon: Icon }) => {
             const activa = seccion === id;
             const color = SECTION_COLORS[id];
-            const conteo =
-              id === "secundaria"
-                ? conteos.secundaria
-                : id === "universidad"
-                  ? conteos.universidad
-                  : null;
+            const conteo = id === "dashboard" ? null : conteos[id];
 
             return (
               <button

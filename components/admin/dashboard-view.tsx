@@ -15,6 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/admin/stat-card";
 import { getFolderColor } from "@/lib/folder-colors";
+import { CATEGORIAS_ORDEN, CATEGORIAS } from "@/lib/categorias";
 import {
   DIAS_DESACTUALIZADA,
   etiquetaCategoria,
@@ -131,12 +132,19 @@ export function DashboardView({
     [unidades]
   );
 
+  // "3 secundaria · 2 UATX · 1 UVHM", omitiendo las que estan en cero para
+  // que la linea no crezca sin aportar nada.
+  const desglose = (porId: Record<string, number>) =>
+    CATEGORIAS_ORDEN.filter((id) => porId[id] > 0)
+      .map((id) => `${porId[id]} ${CATEGORIAS[id].label}`)
+      .join(" · ") || "Sin contenido todavia";
+
   const tarjetas: Tarjeta[] = [
     {
       key: "unidades",
       label: "Unidades",
       value: stats.unidades.total,
-      detail: `${stats.unidades.secundaria} secundaria · ${stats.unidades.universidad} universidad`,
+      detail: desglose(stats.unidades.porId),
       icon: Layers,
       titulo: "Todas las unidades",
       detalle: { tipo: "unidad", items: stats.todas },
@@ -145,7 +153,7 @@ export function DashboardView({
       key: "recursos",
       label: "Recursos",
       value: stats.recursos.total,
-      detail: `${stats.recursos.secundaria} secundaria · ${stats.recursos.universidad} universidad`,
+      detail: desglose(stats.recursos.porId),
       icon: FolderOpen,
       titulo: "Todos los recursos",
       detalle: { tipo: "recurso", items: recursos },

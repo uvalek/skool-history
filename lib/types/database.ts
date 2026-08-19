@@ -1,4 +1,4 @@
-export type Categoria = "secundaria" | "universidad";
+export type Categoria = "secundaria" | "uatx" | "uvhm";
 
 // --- Unidades ---
 export type UnidadColor =

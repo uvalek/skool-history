@@ -5,58 +5,29 @@ import Link from "next/link";
 import { Download, FileText, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { VideoCarousel } from "@/components/video-carousel";
-import type { Recurso, Unidad, Categoria } from "@/lib/types/database";
+import { CATEGORIAS } from "@/lib/categorias";
+import type { Recurso, Unidad } from "@/lib/types/database";
 
 interface UnidadDetailProps {
   unidad: Unidad;
   recursos: Recurso[];
 }
 
-const themeColors: Record<
-  Categoria,
-  {
-    accent: string;
-    accentText: string;
-    accentLight: string;
-    accentLightText: string;
-    linkColor: string;
-    badgeBg: string;
-    badgeText: string;
-    downloadBg: string;
-    downloadText: string;
-    downloadHover: string;
-  }
-> = {
-  secundaria: {
-    accent: "#059669",
-    accentText: "#ffffff",
-    accentLight: "#d1fae5",
-    accentLightText: "#065f46",
-    linkColor: "#059669",
-    badgeBg: "#d1fae5",
-    badgeText: "#065f46",
-    downloadBg: "#d1fae5",
-    downloadText: "#065f46",
-    downloadHover: "#a7f3d0",
-  },
-  universidad: {
-    accent: "#b45309",
-    accentText: "#ffffff",
-    accentLight: "#fef3c7",
-    accentLightText: "#78350f",
-    linkColor: "#b45309",
-    badgeBg: "#fef3c7",
-    badgeText: "#78350f",
-    downloadBg: "#fef3c7",
-    downloadText: "#78350f",
-    downloadHover: "#fde68a",
-  },
-};
 
 export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selectedRecurso = recursos[selectedIndex] || null;
-  const theme = themeColors[unidad.categoria];
+  const c = CATEGORIAS[unidad.categoria];
+  // Forma que espera VideoCarousel y el resto de la vista.
+  const theme = {
+    accent: c.accent,
+    accentText: "#ffffff",
+    accentLight: c.light,
+    accentLightText: c.onLight,
+    linkColor: c.accent,
+    downloadBg: c.light,
+    downloadText: c.onLight,
+  };
 
   // Las URLs pueden traer huecos vacios de los formularios del panel.
   const videos = selectedRecurso?.urls_video.filter(Boolean) ?? [];
@@ -73,7 +44,7 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
             style={{ color: theme.linkColor }}
           >
             <ArrowLeft className="h-4 w-4" />
-            {unidad.categoria === "secundaria" ? "Secundaria" : "Universidad"}
+            {c.label}
           </Link>
           <span className="text-ds-on-surface-variant">/</span>
           <span className="font-medium text-ds-on-surface">

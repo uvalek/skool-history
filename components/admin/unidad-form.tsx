@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { BannerPicker } from "@/components/admin/banner-picker";
 import { FOLDER_COLORS } from "@/lib/folder-colors";
+import { CATEGORIAS, CATEGORIAS_ORDEN } from "@/lib/categorias";
 import type { Categoria, UnidadColor } from "@/lib/types/database";
 
 function ColorPicker({
@@ -127,8 +128,11 @@ export function UnidadForm({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="secundaria">Secundaria</SelectItem>
-                <SelectItem value="universidad">Universidad</SelectItem>
+                {CATEGORIAS_ORDEN.map((id) => (
+                  <SelectItem key={id} value={id}>
+                    {CATEGORIAS[id].label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
