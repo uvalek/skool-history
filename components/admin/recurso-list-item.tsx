@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { UltimaActualizacion } from "@/components/ultima-actualizacion";
 import type { Recurso } from "@/lib/types/database";
 
 interface RecursoListItemProps {
@@ -60,6 +61,11 @@ export function RecursoListItem({
                 {recurso.urls_video.filter(Boolean).length} video(s)
                 {" · "}
                 {recurso.urls_recurso.filter(Boolean).length} archivo(s)
+                {" · "}
+                <UltimaActualizacion
+                  creado={recurso.created_at}
+                  actualizado={recurso.updated_at}
+                />
               </p>
             </div>
           </div>

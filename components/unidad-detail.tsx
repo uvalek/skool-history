@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Download, FileText, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { VideoCarousel } from "@/components/video-carousel";
+import { UltimaActualizacion } from "@/components/ultima-actualizacion";
 import { CATEGORIAS } from "@/lib/categorias";
 import type { Recurso, Unidad } from "@/lib/types/database";
 
@@ -58,9 +59,15 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
         {/* Sidebar - Lista de recursos */}
         <aside className="border-b md:border-b-0 md:border-r ghost-border bg-ds-surface-container-low overflow-y-auto">
           <div className="p-4">
-            <h2 className="font-headline text-sm font-semibold text-ds-on-surface-variant uppercase tracking-wider mb-3">
+            <h2 className="font-headline text-sm font-semibold text-ds-on-surface-variant uppercase tracking-wider">
               Contenido de la unidad
             </h2>
+            <UltimaActualizacion
+              creado={unidad.created_at}
+              actualizado={unidad.updated_at}
+              genero="f"
+              className="mb-3 mt-1 block"
+            />
             <div className="space-y-1">
               {recursos.map((recurso, index) => (
                 <button
@@ -105,9 +112,16 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
         <main className="min-w-0 p-6 md:p-8">
           {selectedRecurso ? (
             <div className="space-y-6">
-              <h1 className="font-headline text-2xl font-bold text-ds-on-surface">
-                {selectedRecurso.titulo}
-              </h1>
+              <div>
+                <h1 className="font-headline text-2xl font-bold text-ds-on-surface">
+                  {selectedRecurso.titulo}
+                </h1>
+                <UltimaActualizacion
+                  creado={selectedRecurso.created_at}
+                  actualizado={selectedRecurso.updated_at}
+                  className="mt-1 block"
+                />
+              </div>
 
               {/* Videos: uno embebido, con carrusel si hay varios */}
               <VideoCarousel

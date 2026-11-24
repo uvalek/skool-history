@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UnidadBanner } from "@/components/unidad-banner";
+import { UltimaActualizacion } from "@/components/ultima-actualizacion";
 import { CATEGORIAS } from "@/lib/categorias";
 import type { Unidad } from "@/lib/types/database";
 
@@ -47,6 +48,14 @@ export function UnidadCard({ unidad, recursoCount }: UnidadCardProps) {
               {unidad.descripcion}
             </CardDescription>
           )}
+          {/* Separada de la descripcion: sin el margen se lee como una tercera
+              linea del texto en vez de como una nota al pie. */}
+          <UltimaActualizacion
+            creado={unidad.created_at}
+            actualizado={unidad.updated_at}
+            genero="f"
+            className="mt-1.5 block"
+          />
         </CardHeader>
 
         {/* Sin borde ni fondo propios: el sistema de diseno separa por tono,

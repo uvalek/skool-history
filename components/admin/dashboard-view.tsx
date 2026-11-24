@@ -19,11 +19,11 @@ import { CATEGORIAS_ORDEN, CATEGORIAS } from "@/lib/categorias";
 import {
   DIAS_DESACTUALIZADA,
   etiquetaCategoria,
-  tiempoRelativo,
   unidadesQueNecesitanAtencion,
   type Estadisticas,
   type UnidadConMetricas,
 } from "@/lib/admin-stats";
+import { tiempoRelativo } from "@/lib/fechas";
 import type { Recurso, Unidad } from "@/lib/types/database";
 
 interface DashboardViewProps {

@@ -1,4 +1,5 @@
 import { CATEGORIAS } from "@/lib/categorias";
+import { diasDesde } from "@/lib/fechas";
 import type { Categoria, Recurso, Unidad } from "@/lib/types/database";
 
 /** Dias sin cambios a partir de los cuales una unidad se considera desactualizada. */
@@ -38,11 +39,6 @@ export function contarRecursosPorUnidad(
     },
     {} as Record<string, number>
   );
-}
-
-function diasDesde(fecha: string): number {
-  const ms = Date.now() - new Date(fecha).getTime();
-  return Math.floor(ms / 86_400_000);
 }
 
 function porCategoria<T extends { categoria: Categoria }>(
@@ -110,17 +106,6 @@ export function unidadesQueNecesitanAtencion(
     ...stats.vacias,
     ...stats.desactualizadas.filter((u) => !vistas.has(u.id)),
   ].slice(0, limite);
-}
-
-const rtf = new Intl.RelativeTimeFormat("es", { numeric: "auto" });
-
-/** "hoy", "hace 3 dias", "hace 2 meses" */
-export function tiempoRelativo(fecha: string): string {
-  const dias = diasDesde(fecha);
-  if (dias < 1) return "hoy";
-  if (dias < 30) return rtf.format(-dias, "day");
-  if (dias < 365) return rtf.format(-Math.floor(dias / 30), "month");
-  return rtf.format(-Math.floor(dias / 365), "year");
 }
 
 /** Etiqueta visible de cada categoria. */

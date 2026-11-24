@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getFolderColor } from "@/lib/folder-colors";
-import { tiempoRelativo } from "@/lib/admin-stats";
+import { UltimaActualizacion } from "@/components/ultima-actualizacion";
 import type { Unidad } from "@/lib/types/database";
 
 interface UnidadListItemProps {
@@ -79,8 +79,12 @@ export function UnidadListItem({
                 {unidad.titulo}
               </h3>
               <p className="truncate text-xs text-ds-on-surface-variant">
-                {recursoCount} recurso(s) · editada{" "}
-                {tiempoRelativo(unidad.updated_at)}
+                {recursoCount} recurso(s) ·{" "}
+                <UltimaActualizacion
+                  creado={unidad.created_at}
+                  actualizado={unidad.updated_at}
+                  genero="f"
+                />
               </p>
             </div>
           </div>

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UnidadBanner } from "@/components/unidad-banner";
-import { tiempoRelativo } from "@/lib/admin-stats";
+import { UltimaActualizacion } from "@/components/ultima-actualizacion";
 import type { Unidad } from "@/lib/types/database";
 
 interface UnidadGalleryCardProps {
@@ -112,9 +112,13 @@ export function UnidadGalleryCard({
               ? "Sin recursos"
               : `${recursoCount} recurso${recursoCount === 1 ? "" : "s"}`}
           </Badge>
-          <span className="truncate text-xs text-ds-on-surface-variant">
-            {tiempoRelativo(unidad.updated_at)}
-          </span>
+          <UltimaActualizacion
+            creado={unidad.created_at}
+            actualizado={unidad.updated_at}
+            genero="f"
+            etiqueta={false}
+            className="truncate"
+          />
         </CardFooter>
       </Card>
     </div>
