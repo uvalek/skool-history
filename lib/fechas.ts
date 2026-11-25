@@ -22,12 +22,23 @@ export function tiempoRelativo(fecha: string): string {
   return rtf.format(-Math.floor(dias / 365), "year");
 }
 
+/**
+ * Zona de la profesora y sus alumnos.
+ *
+ * Sin fijarla, la fecha sale en la zona de quien renderiza: el servidor de
+ * Vercel corre en UTC y el navegador en la local, asi que un cambio hecho de
+ * noche en Mexico aparecia con un dia de mas en produccion y se corregia solo
+ * al hidratar.
+ */
+const ZONA = "America/Mexico_City";
+
 /** "12 de agosto de 2026", para el tooltip de la leyenda. */
 export function fechaCompleta(fecha: string): string {
   return new Date(fecha).toLocaleDateString("es-MX", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: ZONA,
   });
 }
 
