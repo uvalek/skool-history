@@ -61,7 +61,7 @@ export function AdminSidebar({
       {/* Velo para el cajon en movil */}
       {abierta && (
         <div
-          className="fixed inset-0 z-40 bg-[#392b53]/20 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-[var(--overlay-scrim)] backdrop-blur-sm md:hidden"
           onClick={onCerrar}
           aria-hidden
         />
@@ -154,7 +154,7 @@ export function AdminSidebar({
                   <span
                     style={
                       activa
-                        ? { backgroundColor: color.accent, color: "#ffffff" }
+                        ? { backgroundColor: color.accent, color: color.onAccent }
                         : undefined
                     }
                     className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold ${

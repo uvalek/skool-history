@@ -28,7 +28,11 @@ export function UnidadBanner({
         className
       )}
       style={{
-        background: `linear-gradient(135deg, ${c.bgHex} 0%, ${c.iconHex}33 100%)`,
+        // El segundo tono es el del icono al 20%. Antes se lograba pegando
+        // "33" al final del hexadecimal, pero ahora los colores son var() y
+        // "var(--x)33" no es CSS valido: invalidaba el degradado entero y el
+        // banner se quedaba sin fondo. color-mix si acepta una variable.
+        background: `linear-gradient(135deg, ${c.bgHex} 0%, color-mix(in srgb, ${c.iconHex} 20%, transparent) 100%)`,
       }}
     >
       {imagenUrl ? (

@@ -78,9 +78,9 @@ export function StatCard({
           onClick();
         }
       }}
-      className={`cursor-pointer text-left transition-all hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none ${
+      className={`cursor-pointer text-left transition-all hover:-translate-y-0.5 hover:bg-[var(--admin-card-bg-hover)] focus-visible:outline-none ${
         activa
-          ? "bg-white ring-2 ring-ds-primary shadow-editorial"
+          ? "bg-[var(--admin-card-bg-hover)] ring-2 ring-ds-primary shadow-editorial"
           : "ring-0 admin-card shadow-editorial"
       }`}
     >

@@ -137,7 +137,7 @@ export function VideoCarousel({ videos, titulo, theme }: VideoCarouselProps) {
               style={
                 i === index
                   ? { width: "1.5rem", backgroundColor: theme.accent }
-                  : { width: "0.5rem", backgroundColor: "#c8c5d0" }
+                  : { width: "0.5rem", backgroundColor: "var(--ds-outline-variant)" }
               }
             />
           ))}

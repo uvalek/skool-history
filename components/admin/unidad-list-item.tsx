@@ -51,7 +51,7 @@ export function UnidadListItem({
   return (
     <div ref={setNodeRef} style={style}>
       <Card
-        className="ring-0 admin-card shadow-editorial cursor-pointer transition-all hover:-translate-y-0.5 hover:bg-white"
+        className="ring-0 admin-card shadow-editorial cursor-pointer transition-all hover:-translate-y-0.5 hover:bg-[var(--admin-card-bg-hover)]"
         onClick={onOpen}
       >
         <CardContent className="flex items-center justify-between gap-3 p-4">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen } from "lucide-react";
 import { CATEGORIAS, CATEGORIAS_ORDEN } from "@/lib/categorias";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -28,7 +29,7 @@ export function Navbar() {
                 className="rounded-full px-3 py-1.5 text-sm font-semibold transition-all sm:px-4"
                 style={
                   activa
-                    ? { backgroundColor: c.accent, color: "#ffffff" }
+                    ? { backgroundColor: c.accent, color: c.onAccent }
                     : undefined
                 }
               >
@@ -42,6 +43,7 @@ export function Navbar() {
               </Link>
             );
           })}
+          <ThemeToggle className="ml-1" />
         </nav>
       </div>
     </header>

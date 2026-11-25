@@ -49,7 +49,7 @@ export function UnidadGalleryCard({
   return (
     <div ref={setNodeRef} style={style} className="group h-full">
       <Card
-        className="h-full cursor-pointer gap-0 overflow-hidden p-0 ring-0 admin-card shadow-editorial transition-all hover:-translate-y-0.5 hover:bg-white"
+        className="h-full cursor-pointer gap-0 overflow-hidden p-0 ring-0 admin-card shadow-editorial transition-all hover:-translate-y-0.5 hover:bg-[var(--admin-card-bg-hover)]"
         onClick={onOpen}
       >
         <div className="relative">
@@ -66,7 +66,7 @@ export function UnidadGalleryCard({
                 e.stopPropagation();
                 onEdit();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ds-primary backdrop-blur-sm transition-colors hover:bg-white"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--control-bg)] text-ds-primary backdrop-blur-sm transition-colors hover:bg-[var(--admin-card-bg-hover)]"
               aria-label="Editar unidad"
             >
               <Pencil className="h-3.5 w-3.5" />
@@ -76,7 +76,7 @@ export function UnidadGalleryCard({
                 e.stopPropagation();
                 onDelete();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ds-error backdrop-blur-sm transition-colors hover:bg-white"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--control-bg)] text-ds-error backdrop-blur-sm transition-colors hover:bg-[var(--admin-card-bg-hover)]"
               aria-label="Eliminar unidad"
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -87,7 +87,7 @@ export function UnidadGalleryCard({
             {...attributes}
             {...listeners}
             onClick={(e) => e.stopPropagation()}
-            className="absolute left-2 top-2 flex h-7 w-7 cursor-grab touch-none items-center justify-center rounded-full bg-white/90 text-ds-on-surface-variant opacity-0 backdrop-blur-sm transition-opacity hover:text-ds-primary active:cursor-grabbing group-hover:opacity-100 group-focus-within:opacity-100"
+            className="absolute left-2 top-2 flex h-7 w-7 cursor-grab touch-none items-center justify-center rounded-full bg-[var(--control-bg)] text-ds-on-surface-variant opacity-0 backdrop-blur-sm transition-opacity hover:text-ds-primary active:cursor-grabbing group-hover:opacity-100 group-focus-within:opacity-100"
             aria-label="Reordenar unidad"
           >
             <GripVertical className="h-3.5 w-3.5" />

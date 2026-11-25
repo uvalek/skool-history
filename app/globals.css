@@ -4,6 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Cada color del sistema vive en una variable de :root y se redefine en .dark.
+  @theme solo apunta a esas variables con var(), nunca al hexadecimal: asi el
+  tema se cambia en caliente con una clase en <html>, y los estilos inline que
+  interpolan un color (degradados del hero, sombras de las tarjetas, fondos
+  radiales del panel) tambien lo siguen, porque reciben var(...) en vez de un
+  hexadecimal congelado en el bundle de JavaScript.
+*/
 @theme inline {
   /* shadcn defaults */
   --color-background: var(--background);
@@ -48,76 +56,203 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Design System: The Luminous Scholar — Custom Colors */
-  --color-ds-surface: #fef7ff;
-  --color-ds-surface-bright: #fef7ff;
-  --color-ds-surface-dim: #e3d3ff;
-  --color-ds-surface-container: #f4eaff;
-  --color-ds-surface-container-low: #f9f1ff;
-  --color-ds-surface-container-high: #efe3ff;
-  --color-ds-surface-container-highest: #eaddff;
-  --color-ds-surface-container-lowest: #ffffff;
-  --color-ds-surface-variant: #eaddff;
-  --color-ds-surface-tint: #5d48ce;
+  /* Design System: The Luminous Scholar */
+  --color-ds-surface: var(--ds-surface);
+  --color-ds-surface-bright: var(--ds-surface-bright);
+  --color-ds-surface-dim: var(--ds-surface-dim);
+  --color-ds-surface-container: var(--ds-surface-container);
+  --color-ds-surface-container-low: var(--ds-surface-container-low);
+  --color-ds-surface-container-high: var(--ds-surface-container-high);
+  --color-ds-surface-container-highest: var(--ds-surface-container-highest);
+  --color-ds-surface-container-lowest: var(--ds-surface-container-lowest);
+  --color-ds-surface-variant: var(--ds-surface-variant);
+  --color-ds-surface-tint: var(--ds-surface-tint);
 
-  --color-ds-primary: #5d48ce;
-  --color-ds-primary-dim: #513ac1;
-  --color-ds-primary-container: #c2b9ff;
-  --color-ds-primary-fixed: #c2b9ff;
-  --color-ds-primary-fixed-dim: #b4a9ff;
-  --color-ds-on-primary: #fcf7ff;
-  --color-ds-on-primary-container: #391baa;
-  --color-ds-on-primary-fixed: #240085;
-  --color-ds-on-primary-fixed-variant: #4229b3;
+  --color-ds-primary: var(--ds-primary);
+  --color-ds-primary-dim: var(--ds-primary-dim);
+  --color-ds-primary-container: var(--ds-primary-container);
+  --color-ds-primary-fixed: var(--ds-primary-fixed);
+  --color-ds-primary-fixed-dim: var(--ds-primary-fixed-dim);
+  --color-ds-on-primary: var(--ds-on-primary);
+  --color-ds-on-primary-container: var(--ds-on-primary-container);
+  --color-ds-on-primary-fixed: var(--ds-on-primary-fixed);
+  --color-ds-on-primary-fixed-variant: var(--ds-on-primary-fixed-variant);
 
-  --color-ds-secondary: #0061ab;
-  --color-ds-secondary-dim: #005596;
-  --color-ds-secondary-container: #d3e4ff;
-  --color-ds-secondary-fixed: #d3e4ff;
-  --color-ds-secondary-fixed-dim: #bbd6ff;
-  --color-ds-on-secondary: #f8f8ff;
-  --color-ds-on-secondary-container: #005394;
-  --color-ds-on-secondary-fixed: #004075;
-  --color-ds-on-secondary-fixed-variant: #005da5;
+  --color-ds-secondary: var(--ds-secondary);
+  --color-ds-secondary-dim: var(--ds-secondary-dim);
+  --color-ds-secondary-container: var(--ds-secondary-container);
+  --color-ds-secondary-fixed: var(--ds-secondary-fixed);
+  --color-ds-secondary-fixed-dim: var(--ds-secondary-fixed-dim);
+  --color-ds-on-secondary: var(--ds-on-secondary);
+  --color-ds-on-secondary-container: var(--ds-on-secondary-container);
+  --color-ds-on-secondary-fixed: var(--ds-on-secondary-fixed);
+  --color-ds-on-secondary-fixed-variant: var(--ds-on-secondary-fixed-variant);
 
-  --color-ds-tertiary: #9d4053;
-  --color-ds-tertiary-dim: #8e3448;
-  --color-ds-tertiary-container: #ff9dad;
-  --color-ds-tertiary-fixed: #ff9dad;
-  --color-ds-tertiary-fixed-dim: #fa899d;
-  --color-ds-on-tertiary: #fff7f7;
-  --color-ds-on-tertiary-container: #69172c;
-  --color-ds-on-tertiary-fixed: #490017;
-  --color-ds-on-tertiary-fixed-variant: #742035;
+  --color-ds-tertiary: var(--ds-tertiary);
+  --color-ds-tertiary-dim: var(--ds-tertiary-dim);
+  --color-ds-tertiary-container: var(--ds-tertiary-container);
+  --color-ds-tertiary-fixed: var(--ds-tertiary-fixed);
+  --color-ds-tertiary-fixed-dim: var(--ds-tertiary-fixed-dim);
+  --color-ds-on-tertiary: var(--ds-on-tertiary);
+  --color-ds-on-tertiary-container: var(--ds-on-tertiary-container);
+  --color-ds-on-tertiary-fixed: var(--ds-on-tertiary-fixed);
+  --color-ds-on-tertiary-fixed-variant: var(--ds-on-tertiary-fixed-variant);
 
-  --color-ds-on-surface: #392b53;
-  --color-ds-on-surface-variant: #665883;
-  --color-ds-on-background: #392b53;
-  --color-ds-outline: #8373a0;
-  --color-ds-outline-variant: #bbaadb;
+  --color-ds-on-surface: var(--ds-on-surface);
+  --color-ds-on-surface-variant: var(--ds-on-surface-variant);
+  --color-ds-on-background: var(--ds-on-background);
+  --color-ds-outline: var(--ds-outline);
+  --color-ds-outline-variant: var(--ds-outline-variant);
 
-  --color-ds-error: #ac3149;
-  --color-ds-error-dim: #770326;
-  --color-ds-error-container: #f76a80;
-  --color-ds-on-error: #fff7f7;
-  --color-ds-on-error-container: #68001f;
+  --color-ds-error: var(--ds-error);
+  --color-ds-error-dim: var(--ds-error-dim);
+  --color-ds-error-container: var(--ds-error-container);
+  --color-ds-on-error: var(--ds-on-error);
+  --color-ds-on-error-container: var(--ds-on-error-container);
 
-  --color-ds-inverse-surface: #110a1f;
-  --color-ds-inverse-on-surface: #a398b3;
-  --color-ds-inverse-primary: #907eff;
+  --color-ds-inverse-surface: var(--ds-inverse-surface);
+  --color-ds-inverse-on-surface: var(--ds-inverse-on-surface);
+  --color-ds-inverse-primary: var(--ds-inverse-primary);
 
   /* Fonts */
   --font-headline: var(--font-plus-jakarta);
   --font-body: var(--font-manrope);
 
   /* Shadows */
-  --shadow-editorial: 0px 20px 40px rgba(57, 43, 83, 0.06);
+  --shadow-editorial: var(--editorial-shadow);
 }
 
+/* ======================= TEMA CLARO ======================= */
 :root {
-  /* Map shadcn variables to our design system */
-  --background: #fef7ff;
-  --foreground: #392b53;
+  --ds-surface: #fef7ff;
+  --ds-surface-bright: #fef7ff;
+  --ds-surface-dim: #e3d3ff;
+  --ds-surface-container: #f4eaff;
+  --ds-surface-container-low: #f9f1ff;
+  --ds-surface-container-high: #efe3ff;
+  --ds-surface-container-highest: #eaddff;
+  --ds-surface-container-lowest: #ffffff;
+  --ds-surface-variant: #eaddff;
+  --ds-surface-tint: #5d48ce;
+
+  --ds-primary: #5d48ce;
+  --ds-primary-dim: #513ac1;
+  --ds-primary-container: #c2b9ff;
+  --ds-primary-fixed: #c2b9ff;
+  --ds-primary-fixed-dim: #b4a9ff;
+  --ds-on-primary: #fcf7ff;
+  --ds-on-primary-container: #391baa;
+  --ds-on-primary-fixed: #240085;
+  --ds-on-primary-fixed-variant: #4229b3;
+
+  --ds-secondary: #0061ab;
+  --ds-secondary-dim: #005596;
+  --ds-secondary-container: #d3e4ff;
+  --ds-secondary-fixed: #d3e4ff;
+  --ds-secondary-fixed-dim: #bbd6ff;
+  --ds-on-secondary: #f8f8ff;
+  --ds-on-secondary-container: #005394;
+  --ds-on-secondary-fixed: #004075;
+  --ds-on-secondary-fixed-variant: #005da5;
+
+  --ds-tertiary: #9d4053;
+  --ds-tertiary-dim: #8e3448;
+  --ds-tertiary-container: #ff9dad;
+  --ds-tertiary-fixed: #ff9dad;
+  --ds-tertiary-fixed-dim: #fa899d;
+  --ds-on-tertiary: #fff7f7;
+  --ds-on-tertiary-container: #69172c;
+  --ds-on-tertiary-fixed: #490017;
+  --ds-on-tertiary-fixed-variant: #742035;
+
+  --ds-on-surface: #392b53;
+  --ds-on-surface-variant: #665883;
+  --ds-on-background: #392b53;
+  --ds-outline: #8373a0;
+  --ds-outline-variant: #bbaadb;
+
+  --ds-error: #ac3149;
+  --ds-error-dim: #770326;
+  --ds-error-container: #f76a80;
+  --ds-on-error: #fff7f7;
+  --ds-on-error-container: #68001f;
+
+  --ds-inverse-surface: #110a1f;
+  --ds-inverse-on-surface: #a398b3;
+  --ds-inverse-primary: #907eff;
+
+  /* Superficies compuestas */
+  --editorial-shadow: 0px 20px 40px rgba(57, 43, 83, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --admin-card-bg: rgba(255, 255, 255, 0.72);
+  --admin-card-bg-hover: #ffffff;
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --ghost-border-color: rgba(187, 170, 219, 0.15);
+  --ghost-border-strong: rgba(187, 170, 219, 0.3);
+  --overlay-scrim: rgba(57, 43, 83, 0.2);
+  --card-shadow: 0 2px 12px rgba(57, 43, 83, 0.08),
+    0 4px 24px rgba(93, 72, 206, 0.06);
+  --tiptap-placeholder: rgba(102, 88, 131, 0.5);
+
+  /* Hero sin categoria */
+  --hero-from: #c2b9ff;
+  --hero-to: #fef7ff;
+  --hero-shadow: 0 4px 24px rgba(93, 72, 206, 0.12),
+    0 1.5px 6px rgba(93, 72, 206, 0.08);
+
+  /* Categorias */
+  --cat-secundaria-accent: #059669;
+  --cat-secundaria-on-accent: #ffffff;
+  --cat-secundaria-light: #d1fae5;
+  --cat-secundaria-on-light: #065f46;
+  --cat-secundaria-glow: #6ee7b7;
+  --cat-secundaria-base: #fafffc;
+  --cat-secundaria-wash: rgba(5, 150, 105, 0.3);
+
+  --cat-uatx-accent: #b45309;
+  --cat-uatx-on-accent: #ffffff;
+  --cat-uatx-light: #fef3c7;
+  --cat-uatx-on-light: #78350f;
+  --cat-uatx-glow: #fbbf24;
+  --cat-uatx-base: #fffdfa;
+  --cat-uatx-wash: rgba(180, 83, 9, 0.3);
+
+  --cat-uvhm-accent: #0061ab;
+  --cat-uvhm-on-accent: #ffffff;
+  --cat-uvhm-light: #d3e4ff;
+  --cat-uvhm-on-light: #004075;
+  --cat-uvhm-glow: #7cb8f5;
+  --cat-uvhm-base: #fafcff;
+  --cat-uvhm-wash: rgba(0, 97, 171, 0.3);
+
+  --cat-dashboard-accent: #5d48ce;
+  --cat-dashboard-on-accent: #ffffff;
+  --cat-dashboard-light: #c2b9ff;
+  --cat-dashboard-on-light: #391baa;
+  --cat-dashboard-base: #fdfaff;
+  --cat-dashboard-wash: rgba(93, 72, 206, 0.34);
+
+  /* Carpetas de unidad */
+  --folder-purple-bg: #c2b9ff;
+  --folder-purple-icon: #391baa;
+  --folder-blue-bg: #bbd6ff;
+  --folder-blue-icon: #004075;
+  --folder-teal-bg: #b2f0e8;
+  --folder-teal-icon: #00504a;
+  --folder-green-bg: #b8f0b0;
+  --folder-green-icon: #1a5e12;
+  --folder-yellow-bg: #ffe08a;
+  --folder-yellow-icon: #6b5300;
+  --folder-orange-bg: #ffc4a3;
+  --folder-orange-icon: #7a3000;
+  --folder-rose-bg: #ff9dad;
+  --folder-rose-icon: #69172c;
+  --folder-slate-bg: #c8c5d0;
+  --folder-slate-icon: #3b3850;
+
+  /* shadcn */
+  --background: var(--ds-surface);
+  --foreground: var(--ds-on-surface);
   --card: #f9f1ff;
   --card-foreground: #392b53;
   --popover: #ffffff;
@@ -131,7 +266,7 @@
   --accent: #eaddff;
   --accent-foreground: #392b53;
   --destructive: #ac3149;
-  --border: rgba(187, 170, 219, 0.15);
+  --border: var(--ghost-border-color);
   --input: #eaddff;
   --ring: #5d48ce;
   --chart-1: #5d48ce;
@@ -146,8 +281,167 @@
   --sidebar-primary-foreground: #fcf7ff;
   --sidebar-accent: #eaddff;
   --sidebar-accent-foreground: #392b53;
-  --sidebar-border: rgba(187, 170, 219, 0.15);
+  --sidebar-border: var(--ghost-border-color);
   --sidebar-ring: #5d48ce;
+}
+
+/* ======================= TEMA OSCURO ======================= */
+/*
+  Las superficies son casi negras con matiz morado, para que el violeta de la
+  marca siga sintiendose presente sin encender la pantalla. Los acentos de
+  cada categoria se aclaran y sus fondos se oscurecen: en claro el acento es
+  el color fuerte sobre pastel, y en oscuro se invierte la relacion.
+*/
+.dark {
+  --ds-surface: #14101b;
+  --ds-surface-bright: #3b3545;
+  --ds-surface-dim: #0e0b14;
+  --ds-surface-container: #201b2b;
+  --ds-surface-container-low: #1c1726;
+  --ds-surface-container-high: #2b2537;
+  --ds-surface-container-highest: #363042;
+  --ds-surface-container-lowest: #0a0810;
+  --ds-surface-variant: #494153;
+  --ds-surface-tint: #c2b9ff;
+
+  --ds-primary: #c2b9ff;
+  --ds-primary-dim: #a99dff;
+  --ds-primary-container: #4429b8;
+  --ds-primary-fixed: #c2b9ff;
+  --ds-primary-fixed-dim: #b4a9ff;
+  --ds-on-primary: #27007a;
+  --ds-on-primary-container: #e3dcff;
+  --ds-on-primary-fixed: #240085;
+  --ds-on-primary-fixed-variant: #4229b3;
+
+  --ds-secondary: #a6c8ff;
+  --ds-secondary-dim: #8bb5f5;
+  --ds-secondary-container: #00497f;
+  --ds-secondary-fixed: #d3e4ff;
+  --ds-secondary-fixed-dim: #bbd6ff;
+  --ds-on-secondary: #00325a;
+  --ds-on-secondary-container: #d3e4ff;
+  --ds-on-secondary-fixed: #004075;
+  --ds-on-secondary-fixed-variant: #005da5;
+
+  --ds-tertiary: #ffb1c1;
+  --ds-tertiary-dim: #f797ab;
+  --ds-tertiary-container: #7e2a3f;
+  --ds-tertiary-fixed: #ff9dad;
+  --ds-tertiary-fixed-dim: #fa899d;
+  --ds-on-tertiary: #5a0d22;
+  --ds-on-tertiary-container: #ffd9e0;
+  --ds-on-tertiary-fixed: #490017;
+  --ds-on-tertiary-fixed-variant: #742035;
+
+  --ds-on-surface: #e9e0f5;
+  --ds-on-surface-variant: #c9bedd;
+  --ds-on-background: #e9e0f5;
+  --ds-outline: #948ca6;
+  --ds-outline-variant: #494153;
+
+  --ds-error: #ffb3b9;
+  --ds-error-dim: #f28b96;
+  --ds-error-container: #8e1d33;
+  --ds-on-error: #5f0019;
+  --ds-on-error-container: #ffdadd;
+
+  --ds-inverse-surface: #e9e0f5;
+  --ds-inverse-on-surface: #332d3e;
+  --ds-inverse-primary: #5d48ce;
+
+  /* Superficies compuestas: en oscuro la sombra no se ve, la separacion la
+     da el contraste entre niveles de superficie. */
+  --editorial-shadow: 0px 20px 40px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(28, 23, 38, 0.6);
+  --admin-card-bg: rgba(32, 27, 43, 0.72);
+  --admin-card-bg-hover: #2b2537;
+  --control-bg: rgba(43, 37, 55, 0.92);
+  --ghost-border-color: rgba(201, 190, 221, 0.12);
+  --ghost-border-strong: rgba(201, 190, 221, 0.22);
+  --overlay-scrim: rgba(0, 0, 0, 0.55);
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 4px 24px rgba(0, 0, 0, 0.3);
+  --tiptap-placeholder: rgba(201, 190, 221, 0.45);
+
+  --hero-from: #3a2496;
+  --hero-to: #14101b;
+  --hero-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 1.5px 6px rgba(0, 0, 0, 0.3);
+
+  --cat-secundaria-accent: #34d399;
+  --cat-secundaria-on-accent: #00291f;
+  --cat-secundaria-light: #04312a;
+  --cat-secundaria-on-light: #a7f3d0;
+  --cat-secundaria-glow: #0f5e4a;
+  --cat-secundaria-base: #0c1512;
+  --cat-secundaria-wash: rgba(52, 211, 153, 0.2);
+
+  --cat-uatx-accent: #fbbf24;
+  --cat-uatx-on-accent: #35230a;
+  --cat-uatx-light: #3d2a06;
+  --cat-uatx-on-light: #fde68a;
+  --cat-uatx-glow: #7c4a06;
+  --cat-uatx-base: #16120a;
+  --cat-uatx-wash: rgba(251, 191, 36, 0.2);
+
+  --cat-uvhm-accent: #7cb8f5;
+  --cat-uvhm-on-accent: #042540;
+  --cat-uvhm-light: #052f52;
+  --cat-uvhm-on-light: #cfe4ff;
+  --cat-uvhm-glow: #0a4c82;
+  --cat-uvhm-base: #0a1017;
+  --cat-uvhm-wash: rgba(124, 184, 245, 0.2);
+
+  --cat-dashboard-accent: #c2b9ff;
+  --cat-dashboard-on-accent: #27007a;
+  --cat-dashboard-light: #3a2496;
+  --cat-dashboard-on-light: #e3dcff;
+  --cat-dashboard-base: #120f19;
+  --cat-dashboard-wash: rgba(194, 185, 255, 0.2);
+
+  --folder-purple-bg: #3a2496;
+  --folder-purple-icon: #d7d0ff;
+  --folder-blue-bg: #0b3a63;
+  --folder-blue-icon: #cfe4ff;
+  --folder-teal-bg: #06403b;
+  --folder-teal-icon: #9ff0e6;
+  --folder-green-bg: #154a10;
+  --folder-green-icon: #b8f0b0;
+  --folder-yellow-bg: #4d3c00;
+  --folder-yellow-icon: #ffe08a;
+  --folder-orange-bg: #5c2400;
+  --folder-orange-icon: #ffc4a3;
+  --folder-rose-bg: #5e1427;
+  --folder-rose-icon: #ffc2cc;
+  --folder-slate-bg: #3b3850;
+  --folder-slate-icon: #c8c5d0;
+
+  --card: #1c1726;
+  --card-foreground: #e9e0f5;
+  --popover: #201b2b;
+  --popover-foreground: #e9e0f5;
+  --primary: #c2b9ff;
+  --primary-foreground: #27007a;
+  --secondary: #a6c8ff;
+  --secondary-foreground: #00325a;
+  --muted: #201b2b;
+  --muted-foreground: #c9bedd;
+  --accent: #2b2537;
+  --accent-foreground: #e9e0f5;
+  --destructive: #ffb3b9;
+  --input: #363042;
+  --ring: #c2b9ff;
+  --chart-1: #c2b9ff;
+  --chart-2: #a6c8ff;
+  --chart-3: #ffb1c1;
+  --chart-4: #4429b8;
+  --chart-5: #00497f;
+  --sidebar: #1c1726;
+  --sidebar-foreground: #e9e0f5;
+  --sidebar-primary: #c2b9ff;
+  --sidebar-primary-foreground: #27007a;
+  --sidebar-accent: #2b2537;
+  --sidebar-accent-foreground: #e9e0f5;
+  --sidebar-ring: #c2b9ff;
 }
 
 @layer base {
@@ -159,6 +453,10 @@
   }
   html {
     @apply font-body;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-headline);
@@ -170,7 +468,7 @@
     font-weight: 700;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    color: #392b53;
+    color: var(--ds-on-surface);
     font-family: var(--font-headline);
   }
   .prose-ds h2 {
@@ -178,7 +476,7 @@
     font-weight: 600;
     margin-top: 0.875rem;
     margin-bottom: 0.375rem;
-    color: #392b53;
+    color: var(--ds-on-surface);
     font-family: var(--font-headline);
   }
   .prose-ds h3 {
@@ -186,17 +484,17 @@
     font-weight: 600;
     margin-top: 0.75rem;
     margin-bottom: 0.375rem;
-    color: #392b53;
+    color: var(--ds-on-surface);
     font-family: var(--font-headline);
   }
   .prose-ds p {
     margin-bottom: 0.625rem;
     line-height: 1.7;
-    color: #392b53;
+    color: var(--ds-on-surface);
   }
   .prose-ds strong {
     font-weight: 700;
-    color: #392b53;
+    color: var(--ds-on-surface);
   }
   .prose-ds em {
     font-style: italic;
@@ -216,27 +514,28 @@
     line-height: 1.6;
   }
   .prose-ds blockquote {
-    border-left: 3px solid #c2b9ff;
+    border-left: 3px solid var(--ds-primary-fixed-dim);
     padding-left: 1rem;
     margin: 0.75rem 0;
-    color: #665883;
+    color: var(--ds-on-surface-variant);
     font-style: italic;
   }
   .prose-ds hr {
     border: none;
-    border-top: 1px solid rgba(187, 170, 219, 0.3);
+    border-top: 1px solid var(--ghost-border-strong);
     margin: 1rem 0;
   }
   .prose-ds a {
-    color: #5d48ce;
+    color: var(--ds-primary);
     text-decoration: underline;
     text-underline-offset: 2px;
   }
   .prose-ds a:hover {
-    color: #391baa;
+    color: var(--ds-on-primary-container);
   }
   .prose-ds code {
-    background: #eaddff;
+    background: var(--ds-surface-container-highest);
+    color: var(--ds-on-surface);
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     font-size: 0.85em;
@@ -247,13 +546,13 @@
     min-height: 120px;
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
-    color: #392b53;
+    color: var(--ds-on-surface);
     outline: none;
   }
   .tiptap p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     float: left;
-    color: rgba(102, 88, 131, 0.5);
+    color: var(--tiptap-placeholder);
     pointer-events: none;
     height: 0;
     font-style: italic;
@@ -265,10 +564,10 @@
 
 @layer utilities {
   .ghost-border {
-    border: 1px solid rgba(187, 170, 219, 0.15);
+    border: 1px solid var(--ghost-border-color);
   }
   .glass-card {
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
@@ -276,15 +575,15 @@
      el degradado de la seccion y toma su matiz, en lugar de imponer el
      lavanda de surface-container-low sobre un fondo verde o cafe. */
   .admin-card {
-    background: rgba(255, 255, 255, 0.72);
+    background: var(--admin-card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
   .shadow-editorial {
-    box-shadow: var(--shadow-editorial);
+    box-shadow: var(--editorial-shadow);
   }
   .gradient-hero {
-    background: linear-gradient(135deg, #c2b9ff 0%, #fef7ff 100%);
+    background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
   }
 
   .unidad-layout {

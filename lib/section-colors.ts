@@ -6,6 +6,8 @@ export type SeccionColor = "dashboard" | Categoria;
 
 export interface ColoresSeccion {
   accent: string;
+  /** Texto legible encima de accent. */
+  onAccent: string;
   light: string;
   onLight: string;
   base: string;
@@ -13,11 +15,12 @@ export interface ColoresSeccion {
 }
 
 const dashboard: ColoresSeccion = {
-  accent: "#5d48ce",
-  light: "#c2b9ff",
-  onLight: "#391baa",
-  base: "#fdfaff",
-  glow: "rgba(93, 72, 206, 0.34)",
+  accent: "var(--cat-dashboard-accent)",
+  onAccent: "var(--cat-dashboard-on-accent)",
+  light: "var(--cat-dashboard-light)",
+  onLight: "var(--cat-dashboard-on-light)",
+  base: "var(--cat-dashboard-base)",
+  glow: "var(--cat-dashboard-wash)",
 };
 
 /**
@@ -31,6 +34,7 @@ export const SECTION_COLORS: Record<SeccionColor, ColoresSeccion> = {
       c.id,
       {
         accent: c.accent,
+        onAccent: c.onAccent,
         light: c.light,
         onLight: c.onLight,
         base: c.base,

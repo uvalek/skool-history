@@ -19,11 +19,11 @@ export function HeroSection({ title, subtitle, categoria }: HeroSectionProps) {
         subtitleColor: c.accent,
       }
     : {
-        gradient: "linear-gradient(135deg, #c2b9ff 0%, #fef7ff 100%)",
-        shadow:
-          "0 4px 24px rgba(93, 72, 206, 0.12), 0 1.5px 6px rgba(93, 72, 206, 0.08)",
-        titleColor: "#392b53",
-        subtitleColor: "#665883",
+        gradient:
+          "linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%)",
+        shadow: "var(--hero-shadow)",
+        titleColor: "var(--ds-on-surface)",
+        subtitleColor: "var(--ds-on-surface-variant)",
       };
 
   return (

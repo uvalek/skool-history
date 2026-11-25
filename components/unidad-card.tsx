@@ -27,11 +27,8 @@ export function UnidadCard({ unidad, recursoCount }: UnidadCardProps) {
       className="group block h-full"
     >
       <Card
-        className="h-full min-w-0 gap-0 overflow-hidden p-0 ring-0 bg-white transition-all hover:-translate-y-1"
-        style={{
-          boxShadow:
-            "0 2px 12px rgba(57, 43, 83, 0.08), 0 4px 24px rgba(93, 72, 206, 0.06)",
-        }}
+        className="h-full min-w-0 gap-0 overflow-hidden p-0 ring-0 bg-ds-surface-container-lowest transition-all hover:-translate-y-1"
+        style={{ boxShadow: "var(--card-shadow)" }}
       >
         <UnidadBanner
           imagenUrl={unidad.imagen_url}

@@ -11,7 +11,7 @@ export default function Home() {
           <HandWrittenTitle
             title="Explora la Historia"
             subtitle="Selecciona tu nivel educativo para acceder a los recursos de estudio."
-            strokeColor="text-[#5d48ce]"
+            strokeColor="text-ds-primary"
           />
         </div>
       </section>

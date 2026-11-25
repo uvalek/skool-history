@@ -45,6 +45,7 @@ import {
   VISTA_STORAGE_KEY,
   type VistaUnidades,
 } from "@/components/admin/view-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   calcularEstadisticas,
   contarRecursosPorUnidad,
@@ -474,6 +475,7 @@ export default function AdminPage() {
             <h1 className="truncate font-headline text-lg font-bold text-ds-on-surface">
               {tituloEncabezado}
             </h1>
+            <ThemeToggle className="ml-auto" />
           </div>
         </header>
 
@@ -509,7 +511,7 @@ export default function AdminPage() {
                       onClick={nuevaUnidad}
                       style={{
                         backgroundColor: SECTION_COLORS[categoriaActiva].accent,
-                        color: "#ffffff",
+                        color: SECTION_COLORS[categoriaActiva].onAccent,
                       }}
                       className="rounded-full transition-all hover:brightness-110"
                     >
@@ -613,7 +615,7 @@ export default function AdminPage() {
                     style={{
                       backgroundColor:
                         SECTION_COLORS[unidadActiva.categoria].accent,
-                      color: "#ffffff",
+                      color: SECTION_COLORS[unidadActiva.categoria].onAccent,
                     }}
                     className="rounded-full transition-all hover:brightness-110"
                   >

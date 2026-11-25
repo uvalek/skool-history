@@ -28,7 +28,7 @@ export function GateSelector() {
                 } as React.CSSProperties
               }
             >
-              <div className="relative z-[1] m-[3px] flex h-full flex-col items-center gap-6 rounded-[calc(1rem-3px)] bg-white p-10">
+              <div className="relative z-[1] m-[3px] flex h-full flex-col items-center gap-6 rounded-[calc(1rem-3px)] bg-ds-surface-container-lowest p-10">
                 <div
                   className="flex h-20 w-20 items-center justify-center rounded-full"
                   style={{ backgroundColor: c.light }}

@@ -22,7 +22,7 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   // Forma que espera VideoCarousel y el resto de la vista.
   const theme = {
     accent: c.accent,
-    accentText: "#ffffff",
+    accentText: c.onAccent,
     accentLight: c.light,
     accentLightText: c.onLight,
     linkColor: c.accent,
@@ -92,8 +92,9 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                             color: theme.accentText,
                           }
                         : {
-                            backgroundColor: "#e7e0ec",
-                            color: "#665883",
+                            backgroundColor:
+                              "var(--ds-surface-container-highest)",
+                            color: "var(--ds-on-surface-variant)",
                           }
                     }
                   >

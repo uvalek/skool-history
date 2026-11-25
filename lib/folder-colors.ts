@@ -1,19 +1,66 @@
 import type { UnidadColor } from "@/lib/types/database";
 
+/**
+ * Los ocho colores que la profesora puede dar a una carpeta.
+ *
+ * Son variables CSS y no hexadecimales porque se aplican con style inline:
+ * en tema oscuro cada pareja se invierte (fondo oscuro, icono claro) y eso
+ * solo puede resolverlo el navegador, no un valor fijado al construir.
+ */
 export const FOLDER_COLORS: {
   value: UnidadColor;
   bgHex: string;
   iconHex: string;
   label: string;
 }[] = [
-  { value: "purple", bgHex: "#c2b9ff", iconHex: "#391baa", label: "Morado" },
-  { value: "blue", bgHex: "#bbd6ff", iconHex: "#004075", label: "Azul" },
-  { value: "teal", bgHex: "#b2f0e8", iconHex: "#00504a", label: "Turquesa" },
-  { value: "green", bgHex: "#b8f0b0", iconHex: "#1a5e12", label: "Verde" },
-  { value: "yellow", bgHex: "#ffe08a", iconHex: "#6b5300", label: "Amarillo" },
-  { value: "orange", bgHex: "#ffc4a3", iconHex: "#7a3000", label: "Naranja" },
-  { value: "rose", bgHex: "#ff9dad", iconHex: "#69172c", label: "Rosa" },
-  { value: "slate", bgHex: "#c8c5d0", iconHex: "#3b3850", label: "Gris" },
+  {
+    value: "purple",
+    bgHex: "var(--folder-purple-bg)",
+    iconHex: "var(--folder-purple-icon)",
+    label: "Morado",
+  },
+  {
+    value: "blue",
+    bgHex: "var(--folder-blue-bg)",
+    iconHex: "var(--folder-blue-icon)",
+    label: "Azul",
+  },
+  {
+    value: "teal",
+    bgHex: "var(--folder-teal-bg)",
+    iconHex: "var(--folder-teal-icon)",
+    label: "Turquesa",
+  },
+  {
+    value: "green",
+    bgHex: "var(--folder-green-bg)",
+    iconHex: "var(--folder-green-icon)",
+    label: "Verde",
+  },
+  {
+    value: "yellow",
+    bgHex: "var(--folder-yellow-bg)",
+    iconHex: "var(--folder-yellow-icon)",
+    label: "Amarillo",
+  },
+  {
+    value: "orange",
+    bgHex: "var(--folder-orange-bg)",
+    iconHex: "var(--folder-orange-icon)",
+    label: "Naranja",
+  },
+  {
+    value: "rose",
+    bgHex: "var(--folder-rose-bg)",
+    iconHex: "var(--folder-rose-icon)",
+    label: "Rosa",
+  },
+  {
+    value: "slate",
+    bgHex: "var(--folder-slate-bg)",
+    iconHex: "var(--folder-slate-icon)",
+    label: "Gris",
+  },
 ];
 
 export function getFolderColor(color: UnidadColor) {

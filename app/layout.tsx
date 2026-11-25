@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Manrope } from "next/font/google";
+import { SCRIPT_TEMA } from "@/lib/tema";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -26,10 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // Oscuro es el valor por defecto, asi que la clase viaja ya en el HTML
+    // del servidor. suppressHydrationWarning es necesario porque el script de
+    // abajo puede quitarla antes de que React hidrate, y sin el avisaria de
+    // que el DOM no coincide con lo que renderizo.
     <html
       lang="es"
-      className={`${plusJakarta.variable} ${manrope.variable} h-full`}
+      className={`${plusJakarta.variable} ${manrope.variable} h-full dark`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
