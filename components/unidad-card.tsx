@@ -10,16 +10,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { UnidadBanner } from "@/components/unidad-banner";
 import { UltimaActualizacion } from "@/components/ultima-actualizacion";
+import { ProgresoUnidad } from "@/components/progreso-unidad";
 import { CATEGORIAS } from "@/lib/categorias";
 import type { Unidad } from "@/lib/types/database";
 
 interface UnidadCardProps {
   unidad: Unidad;
-  recursoCount: number;
+  /** Ids de sus recursos: dan el conteo y, cruzados con lo que el alumno
+      lleva visto, el progreso de la unidad. */
+  recursoIds: string[];
 }
 
-export function UnidadCard({ unidad, recursoCount }: UnidadCardProps) {
+export function UnidadCard({ unidad, recursoIds }: UnidadCardProps) {
   const color = CATEGORIAS[unidad.categoria].accent;
+  const recursoCount = recursoIds.length;
 
   return (
     <Link
@@ -57,7 +61,11 @@ export function UnidadCard({ unidad, recursoCount }: UnidadCardProps) {
 
         {/* Sin borde ni fondo propios: el sistema de diseno separa por tono,
             no por lineas. */}
-        <CardFooter className="mt-auto items-center justify-between gap-3 border-0 bg-transparent px-4 pb-5 pt-4">
+        <div className="mt-auto px-4 pt-4">
+          <ProgresoUnidad recursoIds={recursoIds} accent={color} />
+        </div>
+
+        <CardFooter className="items-center justify-between gap-3 border-0 bg-transparent px-4 pb-5 pt-2">
           <Badge variant="outline">
             <FileText className="h-3.5 w-3.5" />
             {recursoCount} {recursoCount === 1 ? "recurso" : "recursos"}

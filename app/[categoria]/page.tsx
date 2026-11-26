@@ -28,23 +28,26 @@ export default async function CategoriaPage({
     .order("orden", { ascending: true })
     .returns<Unidad[]>();
 
-  // Conteo de recursos por unidad, en una sola consulta
+  // Los ids de cada unidad, en una sola consulta. Antes solo se contaban,
+  // pero la barra de progreso necesita saber cuales son para cruzarlos con lo
+  // que el alumno lleva visto en su navegador.
   const unidadIds = (unidades || []).map((u) => u.id);
-  let recursoCounts: Record<string, number> = {};
+  let recursosPorUnidad: Record<string, string[]> = {};
 
   if (unidadIds.length > 0) {
-    const { data: countData } = await supabase
+    const { data: filas } = await supabase
       .from("recursos")
-      .select("unidad_id")
-      .in("unidad_id", unidadIds);
+      .select("id, unidad_id")
+      .in("unidad_id", unidadIds)
+      .order("orden", { ascending: true });
 
-    if (countData) {
-      recursoCounts = countData.reduce(
+    if (filas) {
+      recursosPorUnidad = filas.reduce(
         (acc, r) => {
-          acc[r.unidad_id] = (acc[r.unidad_id] || 0) + 1;
+          (acc[r.unidad_id] ||= []).push(r.id);
           return acc;
         },
-        {} as Record<string, number>
+        {} as Record<string, string[]>
       );
     }
   }
@@ -64,7 +67,7 @@ export default async function CategoriaPage({
               <UnidadCard
                 key={unidad.id}
                 unidad={unidad}
-                recursoCount={recursoCounts[unidad.id] || 0}
+                recursoIds={recursosPorUnidad[unidad.id] || []}
               />
             ))}
           </div>

@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Download, FileText, ArrowLeft } from "lucide-react";
+import { Check, Download, FileText, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { VideoCarousel } from "@/components/video-carousel";
 import { UltimaActualizacion } from "@/components/ultima-actualizacion";
+import { BotonVisto } from "@/components/boton-visto";
+import { guardarUltimo, leerUltimo } from "@/lib/progreso";
+import { useVistos } from "@/lib/usar-progreso";
 import { CATEGORIAS } from "@/lib/categorias";
 import type { Recurso, Unidad } from "@/lib/types/database";
 
@@ -17,7 +20,23 @@ interface UnidadDetailProps {
 
 export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const vistos = useVistos();
   const selectedRecurso = recursos[selectedIndex] || null;
+
+  // Retoma el recurso donde se quedo. Va en un efecto y no en el estado
+  // inicial porque localStorage no existe en el servidor: leerlo al construir
+  // el estado haria que el HTML del servidor y el del cliente no coincidieran.
+  useEffect(() => {
+    const ultimo = leerUltimo(unidad.id);
+    if (!ultimo) return;
+    const i = recursos.findIndex((r) => r.id === ultimo);
+    if (i > 0) setSelectedIndex(i);
+  }, [unidad.id, recursos]);
+
+  function seleccionar(index: number, recursoId: string) {
+    setSelectedIndex(index);
+    guardarUltimo(unidad.id, recursoId);
+  }
   const c = CATEGORIAS[unidad.categoria];
   // Forma que espera VideoCarousel y el resto de la vista.
   const theme = {
@@ -72,7 +91,7 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
               {recursos.map((recurso, index) => (
                 <button
                   key={recurso.id}
-                  onClick={() => setSelectedIndex(index)}
+                  onClick={() => seleccionar(index, recurso.id)}
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-all"
                   style={
                     selectedIndex === index
@@ -100,9 +119,21 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                   >
                     {index + 1}
                   </span>
-                  <span className="text-sm font-medium truncate">
+                  <span className="min-w-0 flex-1 truncate text-sm font-medium">
                     {recurso.titulo}
                   </span>
+                  {vistos[recurso.id] && (
+                    <Check
+                      className="h-4 w-4 shrink-0"
+                      strokeWidth={3}
+                      style={
+                        selectedIndex === index
+                          ? undefined
+                          : { color: theme.accent }
+                      }
+                      aria-label="Visto"
+                    />
+                  )}
                 </button>
               ))}
             </div>
@@ -121,6 +152,12 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                   creado={selectedRecurso.created_at}
                   actualizado={selectedRecurso.updated_at}
                   className="mt-1 block"
+                />
+                <BotonVisto
+                  recursoId={selectedRecurso.id}
+                  accent={theme.accent}
+                  onAccent={theme.accentText}
+                  className="mt-3"
                 />
               </div>
 
