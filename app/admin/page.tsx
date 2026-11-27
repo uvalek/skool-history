@@ -28,6 +28,7 @@ import {
 import { RadialBackground } from "@/components/admin/radial-background";
 import { SECTION_COLORS } from "@/lib/section-colors";
 import { CATEGORIAS_ORDEN } from "@/lib/categorias";
+import { TIPO_POR_DEFECTO } from "@/lib/tipos-recurso";
 import { DashboardView } from "@/components/admin/dashboard-view";
 import { RecursoListItem } from "@/components/admin/recurso-list-item";
 import {
@@ -69,6 +70,7 @@ const UNIDAD_FORM_VACIO: UnidadFormValues = {
 const RECURSO_FORM_VACIO: RecursoFormValues = {
   titulo: "",
   descripcion: "",
+  tipo: TIPO_POR_DEFECTO,
   urlsVideo: [""],
   urlsRecurso: [""],
 };
@@ -349,6 +351,7 @@ export default function AdminPage() {
     setRecursoForm({
       titulo: recurso.titulo,
       descripcion: recurso.descripcion || "",
+      tipo: recurso.tipo || TIPO_POR_DEFECTO,
       urlsVideo: recurso.urls_video.length ? recurso.urls_video : [""],
       urlsRecurso: recurso.urls_recurso.length ? recurso.urls_recurso : [""],
     });
@@ -366,6 +369,7 @@ export default function AdminPage() {
         .update({
           titulo: recursoForm.titulo,
           descripcion: recursoForm.descripcion,
+          tipo: recursoForm.tipo,
           urls_video: recursoForm.urlsVideo.filter(Boolean),
           urls_recurso: recursoForm.urlsRecurso.filter(Boolean),
         })
@@ -375,6 +379,7 @@ export default function AdminPage() {
         titulo: recursoForm.titulo,
         descripcion: recursoForm.descripcion,
         categoria: unidadActiva.categoria,
+        tipo: recursoForm.tipo,
         urls_video: recursoForm.urlsVideo.filter(Boolean),
         urls_recurso: recursoForm.urlsRecurso.filter(Boolean),
         unidad_id: unidadActiva.id,

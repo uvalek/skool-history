@@ -23,6 +23,7 @@ import {
   type Estadisticas,
   type UnidadConMetricas,
 } from "@/lib/admin-stats";
+import { tipoRecurso } from "@/lib/tipos-recurso";
 import { tiempoRelativo } from "@/lib/fechas";
 import type { Recurso, Unidad } from "@/lib/types/database";
 
@@ -94,20 +95,29 @@ function RecursoRow({
   unidadTitulo: string;
   onClick: () => void;
 }) {
+  // El icono dice de que tipo es el material. Antes era siempre un "play",
+  // que prometia video incluso en recursos que solo traen un PDF.
+  const t = tipoRecurso(recurso.tipo);
+  const Icono = t.icono;
+
   return (
     <button
       onClick={onClick}
       className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-ds-surface-container-high"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-ds-surface-container-highest">
-        <Play className="h-4 w-4 text-ds-primary" />
+      <div
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-ds-surface-container-highest"
+        title={t.label}
+      >
+        <Icono className="h-4 w-4 text-ds-primary" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-ds-on-surface">
           {recurso.titulo}
         </p>
         <p className="truncate text-xs text-ds-on-surface-variant">
-          {unidadTitulo} · {recurso.urls_video.filter(Boolean).length} video(s) ·{" "}
+          {t.label} · {unidadTitulo} ·{" "}
+          {recurso.urls_video.filter(Boolean).length} video(s) ·{" "}
           {recurso.urls_recurso.filter(Boolean).length} archivo(s)
         </p>
       </div>

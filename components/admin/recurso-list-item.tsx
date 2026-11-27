@@ -6,6 +6,7 @@ import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UltimaActualizacion } from "@/components/ultima-actualizacion";
+import { EtiquetaTipo } from "@/components/etiqueta-tipo";
 import type { Recurso } from "@/lib/types/database";
 
 interface RecursoListItemProps {
@@ -54,9 +55,12 @@ export function RecursoListItem({
               {index + 1}
             </span>
             <div className="min-w-0">
-              <h3 className="truncate font-headline font-semibold text-ds-on-surface">
-                {recurso.titulo}
-              </h3>
+              <div className="flex min-w-0 items-center gap-2">
+                <h3 className="truncate font-headline font-semibold text-ds-on-surface">
+                  {recurso.titulo}
+                </h3>
+                <EtiquetaTipo tipo={recurso.tipo} />
+              </div>
               <p className="text-xs text-ds-on-surface-variant">
                 {recurso.urls_video.filter(Boolean).length} video(s)
                 {" · "}

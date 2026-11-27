@@ -43,6 +43,13 @@ export interface UnidadUpdate {
 }
 
 // --- Recursos ---
+
+/**
+ * Que clase de material es un recurso. El catalogo con etiquetas, iconos y
+ * cuales cuentan para el progreso vive en lib/tipos-recurso.ts.
+ */
+export type TipoRecurso = "teoria" | "actividad" | "evaluacion" | "referencia";
+
 export interface Recurso {
   id: string;
   created_at: string;
@@ -50,6 +57,7 @@ export interface Recurso {
   titulo: string;
   descripcion: string;
   categoria: Categoria;
+  tipo: TipoRecurso;
   urls_video: string[];
   urls_recurso: string[];
   unidad_id: string | null;
@@ -60,6 +68,7 @@ export interface RecursoInsert {
   titulo: string;
   descripcion?: string;
   categoria: Categoria;
+  tipo?: TipoRecurso;
   urls_video: string[];
   urls_recurso: string[];
   unidad_id: string;
@@ -70,6 +79,7 @@ export interface RecursoUpdate {
   titulo?: string;
   descripcion?: string;
   categoria?: Categoria;
+  tipo?: TipoRecurso;
   urls_video?: string[];
   urls_recurso?: string[];
   unidad_id?: string;

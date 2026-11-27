@@ -16,14 +16,19 @@ import type { Unidad } from "@/lib/types/database";
 
 interface UnidadCardProps {
   unidad: Unidad;
-  /** Ids de sus recursos: dan el conteo y, cruzados con lo que el alumno
-      lleva visto, el progreso de la unidad. */
+  /** Ids de los recursos que cuentan como avance (todo menos las
+      referencias): cruzados con lo que el alumno lleva visto, dan la barra. */
   recursoIds: string[];
+  /** Cuanto material tiene la unidad en total, referencias incluidas. */
+  recursoCount: number;
 }
 
-export function UnidadCard({ unidad, recursoIds }: UnidadCardProps) {
+export function UnidadCard({
+  unidad,
+  recursoIds,
+  recursoCount,
+}: UnidadCardProps) {
   const color = CATEGORIAS[unidad.categoria].accent;
-  const recursoCount = recursoIds.length;
 
   return (
     <Link

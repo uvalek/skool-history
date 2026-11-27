@@ -5,10 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MarkdownEditor } from "@/components/markdown-editor";
+import { TIPOS_RECURSO, TIPOS_RECURSO_ORDEN } from "@/lib/tipos-recurso";
+import type { TipoRecurso } from "@/lib/types/database";
 
 export interface RecursoFormValues {
   titulo: string;
   descripcion: string;
+  tipo: TipoRecurso;
   urlsVideo: string[];
   urlsRecurso: string[];
 }
@@ -19,6 +22,53 @@ interface RecursoFormProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   editando: boolean;
+}
+
+/**
+ * Que clase de material es. Va en botones y no en un desplegable porque la
+ * decision importa: lo que se marque aqui define si el recurso le cuenta al
+ * alumno como avance, y con un select esa consecuencia quedaba escondida.
+ */
+function TipoPicker({
+  value,
+  onChange,
+}: {
+  value: TipoRecurso;
+  onChange: (t: TipoRecurso) => void;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-medium text-ds-on-surface-variant">
+        Tipo de material
+      </label>
+      <div className="flex flex-wrap gap-2">
+        {TIPOS_RECURSO_ORDEN.map((id) => {
+          const t = TIPOS_RECURSO[id];
+          const Icono = t.icono;
+          const activo = value === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => onChange(id)}
+              aria-pressed={activo}
+              className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-all ${
+                activo
+                  ? "bg-ds-primary text-ds-on-primary"
+                  : "bg-ds-surface-container-highest text-ds-on-surface-variant hover:text-ds-primary"
+              }`}
+            >
+              <Icono className="h-4 w-4" />
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
+      <p className="mt-2 text-xs text-ds-on-surface-variant">
+        {TIPOS_RECURSO[value].descripcion}
+      </p>
+    </div>
+  );
 }
 
 /** Lista editable de URLs: cada fila se puede quitar si hay mas de una. */
@@ -110,6 +160,8 @@ export function RecursoForm({
               className="bg-ds-surface-container-highest border-none"
             />
           </div>
+
+          <TipoPicker value={values.tipo} onChange={(t) => set("tipo", t)} />
 
           <div>
             <label className="mb-1 block text-sm font-medium text-ds-on-surface-variant">

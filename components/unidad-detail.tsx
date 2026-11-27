@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Check, Download, FileText, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { VideoCarousel } from "@/components/video-carousel";
 import { UltimaActualizacion } from "@/components/ultima-actualizacion";
+import { EtiquetaTipo } from "@/components/etiqueta-tipo";
 import { BotonVisto } from "@/components/boton-visto";
 import { guardarUltimo, leerUltimo } from "@/lib/progreso";
 import { useVistos } from "@/lib/usar-progreso";
 import { CATEGORIAS } from "@/lib/categorias";
+import {
+  TIPOS_RECURSO,
+  TIPOS_RECURSO_ORDEN,
+  tipoRecurso,
+} from "@/lib/tipos-recurso";
 import type { Recurso, Unidad } from "@/lib/types/database";
 
 interface UnidadDetailProps {
@@ -21,7 +27,34 @@ interface UnidadDetailProps {
 export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const vistos = useVistos();
-  const selectedRecurso = recursos[selectedIndex] || null;
+
+  // La lista se agrupa por tipo de material: la teoria primero, la
+  // bibliografia al final. Antes todo venia seguido y el alumno no podia
+  // distinguir una clase que debe estudiar de una referencia de consulta.
+  //
+  // El numero visible cuenta sobre la lista agrupada, no sobre el campo
+  // 'orden': si numerara por 'orden' los grupos saldrian con numeros
+  // salteados y pareceria que faltan recursos.
+  const grupos = useMemo(() => {
+    let n = 0;
+    return TIPOS_RECURSO_ORDEN.map((tipo) => {
+      const items = recursos
+        .filter((r) => tipoRecurso(r.tipo).id === tipo)
+        .map((recurso) => ({ recurso, index: n++ }));
+      return { tipo, config: TIPOS_RECURSO[tipo], items };
+    }).filter((g) => g.items.length > 0);
+  }, [recursos]);
+
+  // Orden en que se recorren con la lista: el mismo que se ve.
+  const ordenados = useMemo(
+    () => grupos.flatMap((g) => g.items.map((i) => i.recurso)),
+    [grupos]
+  );
+
+  // Con un solo grupo el encabezado no separa nada y solo mete ruido.
+  const mostrarEncabezados = grupos.length > 1;
+
+  const selectedRecurso = ordenados[selectedIndex] || null;
 
   // Retoma el recurso donde se quedo. Va en un efecto y no en el estado
   // inicial porque localStorage no existe en el servidor: leerlo al construir
@@ -29,9 +62,9 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
   useEffect(() => {
     const ultimo = leerUltimo(unidad.id);
     if (!ultimo) return;
-    const i = recursos.findIndex((r) => r.id === ultimo);
+    const i = ordenados.findIndex((r) => r.id === ultimo);
     if (i > 0) setSelectedIndex(i);
-  }, [unidad.id, recursos]);
+  }, [unidad.id, ordenados]);
 
   function seleccionar(index: number, recursoId: string) {
     setSelectedIndex(index);
@@ -88,54 +121,74 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
               className="mb-3 mt-1 block"
             />
             <div className="space-y-1">
-              {recursos.map((recurso, index) => (
-                <button
-                  key={recurso.id}
-                  onClick={() => seleccionar(index, recurso.id)}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-all"
-                  style={
-                    selectedIndex === index
-                      ? {
-                          backgroundColor: theme.accentLight,
-                          color: theme.accentLightText,
-                        }
-                      : undefined
-                  }
-                >
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold"
-                    style={
-                      selectedIndex === index
-                        ? {
-                            backgroundColor: theme.accent,
-                            color: theme.accentText,
-                          }
-                        : {
-                            backgroundColor:
-                              "var(--ds-surface-container-highest)",
-                            color: "var(--ds-on-surface-variant)",
-                          }
+              {grupos.map((grupo) => {
+                const IconoGrupo = grupo.config.icono;
+                return (
+                  <div
+                    key={grupo.tipo}
+                    className={
+                      mostrarEncabezados ? "pt-4 first:pt-0" : undefined
                     }
                   >
-                    {index + 1}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-sm font-medium">
-                    {recurso.titulo}
-                  </span>
-                  {vistos[recurso.id] && (
-                    <Check
-                      className="h-4 w-4 shrink-0"
-                      strokeWidth={3}
-                      style={
-                        selectedIndex === index
-                          ? undefined
-                          : { color: theme.accent }
-                      }
-                      aria-label="Visto"
-                    />
-                  )}
-                </button>
-              ))}
+                    {mostrarEncabezados && (
+                      <div className="mb-1 flex items-center gap-1.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-ds-on-surface-variant">
+                        <IconoGrupo className="h-3 w-3" />
+                        {grupo.config.plural}
+                      </div>
+                    )}
+                    <div className="space-y-1">
+                      {grupo.items.map(({ recurso, index }) => (
+                        <button
+                          key={recurso.id}
+                          onClick={() => seleccionar(index, recurso.id)}
+                          className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-all"
+                          style={
+                            selectedIndex === index
+                              ? {
+                                  backgroundColor: theme.accentLight,
+                                  color: theme.accentLightText,
+                                }
+                              : undefined
+                          }
+                        >
+                          <span
+                            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold"
+                            style={
+                              selectedIndex === index
+                                ? {
+                                    backgroundColor: theme.accent,
+                                    color: theme.accentText,
+                                  }
+                                : {
+                                    backgroundColor:
+                                      "var(--ds-surface-container-highest)",
+                                    color: "var(--ds-on-surface-variant)",
+                                  }
+                            }
+                          >
+                            {index + 1}
+                          </span>
+                          <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                            {recurso.titulo}
+                          </span>
+                          {vistos[recurso.id] && (
+                            <Check
+                              className="h-4 w-4 shrink-0"
+                              strokeWidth={3}
+                              style={
+                                selectedIndex === index
+                                  ? undefined
+                                  : { color: theme.accent }
+                              }
+                              aria-label="Visto"
+                            />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </aside>
@@ -145,6 +198,10 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
           {selectedRecurso ? (
             <div className="space-y-6">
               <div>
+                <EtiquetaTipo
+                  tipo={selectedRecurso.tipo}
+                  className="mb-2"
+                />
                 <h1 className="font-headline text-2xl font-bold text-ds-on-surface">
                   {selectedRecurso.titulo}
                 </h1>
@@ -153,12 +210,17 @@ export function UnidadDetail({ unidad, recursos }: UnidadDetailProps) {
                   actualizado={selectedRecurso.updated_at}
                   className="mt-1 block"
                 />
-                <BotonVisto
-                  recursoId={selectedRecurso.id}
-                  accent={theme.accent}
-                  onAccent={theme.accentText}
-                  className="mt-3"
-                />
+                {/* Una referencia no se "termina": es material de consulta y
+                    no entra en la barra de progreso, asi que ofrecer el boton
+                    seria prometer un avance que nunca se moveria. */}
+                {tipoRecurso(selectedRecurso.tipo).cuenta && (
+                  <BotonVisto
+                    recursoId={selectedRecurso.id}
+                    accent={theme.accent}
+                    onAccent={theme.accentText}
+                    className="mt-3"
+                  />
+                )}
               </div>
 
               {/* Videos: uno embebido, con carrusel si hay varios */}

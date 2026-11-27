@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/hero-section";
 import { UnidadCard } from "@/components/unidad-card";
 import { createClient } from "@/lib/supabase/server";
 import { CATEGORIAS, esCategoria } from "@/lib/categorias";
+import { tipoRecurso } from "@/lib/tipos-recurso";
 import type { Unidad } from "@/lib/types/database";
 
 // Sin prerenderizado: la profesora publica unidades desde el panel y los
@@ -31,24 +32,27 @@ export default async function CategoriaPage({
   // Los ids de cada unidad, en una sola consulta. Antes solo se contaban,
   // pero la barra de progreso necesita saber cuales son para cruzarlos con lo
   // que el alumno lleva visto en su navegador.
+  //
+  // Van en dos cuentas distintas a proposito: la insignia dice cuanto material
+  // hay en total, y la barra mide solo lo que hay que estudiar. Si las
+  // referencias entraran en la barra, una unidad con veinte entradas de
+  // bibliografia se veria casi vacia de avance para siempre.
   const unidadIds = (unidades || []).map((u) => u.id);
-  let recursosPorUnidad: Record<string, string[]> = {};
+  const idsQueCuentanPorUnidad: Record<string, string[]> = {};
+  const totalPorUnidad: Record<string, number> = {};
 
   if (unidadIds.length > 0) {
     const { data: filas } = await supabase
       .from("recursos")
-      .select("id, unidad_id")
+      .select("id, unidad_id, tipo")
       .in("unidad_id", unidadIds)
       .order("orden", { ascending: true });
 
-    if (filas) {
-      recursosPorUnidad = filas.reduce(
-        (acc, r) => {
-          (acc[r.unidad_id] ||= []).push(r.id);
-          return acc;
-        },
-        {} as Record<string, string[]>
-      );
+    for (const fila of filas || []) {
+      totalPorUnidad[fila.unidad_id] = (totalPorUnidad[fila.unidad_id] || 0) + 1;
+      if (tipoRecurso(fila.tipo).cuenta) {
+        (idsQueCuentanPorUnidad[fila.unidad_id] ||= []).push(fila.id);
+      }
     }
   }
 
@@ -67,7 +71,8 @@ export default async function CategoriaPage({
               <UnidadCard
                 key={unidad.id}
                 unidad={unidad}
-                recursoIds={recursosPorUnidad[unidad.id] || []}
+                recursoIds={idsQueCuentanPorUnidad[unidad.id] || []}
+                recursoCount={totalPorUnidad[unidad.id] || 0}
               />
             ))}
           </div>
